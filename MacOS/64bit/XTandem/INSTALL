@@ -1,0 +1,29 @@
+
+                          X! tandem protein sequence modeler
+
+  Installation
+  -----------
+  This distribution contains three directories:
+  
+  1. src   - contains the source files for tandem
+  
+  2. bin   - contains the binary for tandem, as well as example
+             files and mass spectra. You can run tandem
+             from the command line in this directory, by using the 
+             command line:
+            
+             >tandem input.xml
+            
+             The output from the program will appear in the output file
+             specified. Check the path names in taxonomy.xml and input.xml
+             if there is trouble doing this check. Read the default_input.xml
+             file for more information on how the input parameter file format
+             works.
+            
+  3. fasta - contains an example FASTA protein sequence list file. This
+             type of file is often refered to as a "database" file or
+             simply a "database". However, it is not a database of any
+             type: it is simply a file with a simple (but poorly specified)
+             format.
+  
+ 

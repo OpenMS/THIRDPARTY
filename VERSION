@@ -1,0 +1,15 @@
+OMSSA 2.1.9:
+http://pubchem.ncbi.nlm.nih.gov/omssa/download.htm
+
+makeblastdb ncbi-blast-2.2.27+:
+ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/
+
+X!Tandem CYCLONE: 
+ftp://ftp.thegpm.org/projects/tandem/binary/ 
+ Linux 32bit:
+    ftp://ftp.thegpm.org/projects/tandem/binary/linux/fedora_15_32bit_static_links/all_static_link/ 
+  Linux 64bit:
+    ftp://ftp.thegpm.org/projects/tandem/binary/linux/ubuntu_11_64bit_static_links/all_static_link/
+
+MyriMatch 2.1 (build 132 25 Sep. 2012):
+http://fenchurch.mc.vanderbilt.edu/software.php
