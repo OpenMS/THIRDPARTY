@@ -4,7 +4,7 @@
   -----------
   X! tandem open source software that can model tandem
   mass spectra with protein sequences. This software
-  has a very simple, unsophistocated application programming
+  has a very simple, sophistocated application programming
   interface (API): it simply takes an XML file of instructions
   on its command line, and output the results into an XML file,
   which has been specified in the input XML file. 
@@ -14,7 +14,7 @@
 
   Details of the latest version can be found on the X! tandem
   project page under http://www.thegpm.org. 
-  This version is the 1st release the SLEDGEHAMMER edition (version 2013.09.01.1).
+  This version is the 1st release the PILEDRIVER edition (version 2015.12.15.2).
 
 
   Documentation
