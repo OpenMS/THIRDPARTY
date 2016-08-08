@@ -8,12 +8,21 @@ Installation
 
 Usage Information
 	- Type 'java -jar MSGFPlus.jar' for command line arguments
-	- For detailed documentation, visit https://bix-lab.ucsd.edu/pages/viewpage.action?pageId=13533355
+	- For detailed documentation, visit http://omics.pnl.gov/software/ms-gf or https://bix-lab.ucsd.edu/pages/viewpage.action?pageId=13533355
 	- To convert an mzid output file into a tsv file, run 'java -cp MSGFPlus.jar edu.ucsd.msjava.ui.MzIDToTsv'
 
 Contact Information
-	- Sangtae Kim (sak008@ucsd.edu)
+	- PNNL Proteomics Staff (proteomics@pnnl.gov)
+	- Sangtae Kim (sangtae.kim@gmail.com)
 
 Publications
-	- MS-GF+: Universal Database Search Tool for Mass Spectrometry, Sangtae Kim, Pavel A. Pevzner, submitted.
-	- Spectral Probabilities and Generating Functions of Tandem Mass Spectra: A Strike against Decoy Databases, Sangtae Kim, Nitin Gupta and Pavel Pevzner, J. Proteome Res., 7 (8), 3354-3363, 2008.
+	- MS-GF+: Universal Database Search Tool for Mass Spectrometry, Sangtae Kim, Pavel A. Pevzner, 
+      Nat Commun. 2014 Oct 31;5:5277. doi: 10.1038/ncomms6277.
+	  http://www.ncbi.nlm.nih.gov/pubmed/?term=25358478
+
+	- Spectral Probabilities and Generating Functions of Tandem Mass Spectra: A Strike against Decoy Databases, Sangtae Kim, Nitin Gupta and Pavel Pevzner,
+      J Proteome Res. 2008 Aug;7(8):3354-63. doi: 10.1021/pr8001244.
+	  http://www.ncbi.nlm.nih.gov/pubmed/?term=18597511
+
+Updates
+	- http://omics.pnl.gov/software/ms-gf
