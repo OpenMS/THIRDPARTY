@@ -8,13 +8,14 @@ Installation
 
 Usage Information
 	- Type 'java -jar MSGFPlus.jar' for command line arguments
-	- For detailed documentation, visit http://omics.pnl.gov/software/ms-gf or https://bix-lab.ucsd.edu/pages/viewpage.action?pageId=13533355
 	- To convert an mzid output file into a tsv file, run 'java -cp MSGFPlus.jar edu.ucsd.msjava.ui.MzIDToTsv'
+	- For detailed documentation, see the "doc" subfolder, or visit:
+		- https://omics.pnl.gov/software/ms-gf
+		- https://bix-lab.ucsd.edu/pages/viewpage.action?pageId=13533355
 
 Contact Information
-	- PNNL Proteomics Staff (proteomics@pnnl.gov)
-	- Sangtae Kim (sangtae.kim@gmail.com)
-
+	- PNNL Proteomics [proteomics@pnnl.gov]
+    - Sangtae Kim [sangtae.kim (at) gmail.com]
 Publications
 	- MS-GF+: Universal Database Search Tool for Mass Spectrometry, Sangtae Kim, Pavel A. Pevzner, 
       Nat Commun. 2014 Oct 31;5:5277. doi: 10.1038/ncomms6277.
@@ -26,3 +27,6 @@ Publications
 
 Updates
 	- http://omics.pnl.gov/software/ms-gf
+
+Source
+	- https://github.com/sangtaekim/msgfplus
