@@ -27,6 +27,9 @@ cd "$SAVED" >/dev/null
 APP_NAME="sirius"
 APP_BASE_NAME=`basename "$0"`
 
+# Assumes that the lib dir is in the same directory as this script
+LIB_DIR="$(dirname $(realpath -P $0))/lib"
+
 echo $SAVED
 echo $APP_HOME
 
@@ -69,7 +72,8 @@ case "`uname`" in
     ;;
 esac
 
-CLASSPATH="$APP_HOME/../../../All/Sirius/lib/*:${GUROBI_HOME}/lib/gurobi.jar"
+CLASSPATH="${LIB_DIR}/*:${GUROBI_HOME}/lib/gurobi.jar"
+
 
 # Determine the Java command to use to start the JVM.
 if [ -n "$JAVA_HOME" ] ; then
@@ -175,3 +179,4 @@ if [ "$(uname)" = "Darwin" ] && [ "$HOME" = "$PWD" ]; then
 fi
 
 exec "$JAVACMD" "$@"
+
