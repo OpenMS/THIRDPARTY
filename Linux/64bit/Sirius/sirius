@@ -6,6 +6,71 @@
 ##
 ##############################################################################
 
+############ realpath from https://github.com/mkropat/sh-realpath ############
+## The MIT License (MIT)
+
+## Copyright (c) 2014 Michael Kropat
+
+##Permission is hereby granted, free of charge, to any person obtaining a copy
+##of this software and associated documentation files (the "Software"), to deal
+##in the Software without restriction, including without limitation the rights
+##to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+##copies of the Software, and to permit persons to whom the Software is
+##furnished to do so, subject to the following conditions:
+
+##The above copyright notice and this permission notice shall be included in
+##all copies or substantial portions of the Software.
+
+##THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+##IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+##FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+##AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+##LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+##OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+##THE SOFTWARE.
+
+realpath() {
+    canonicalize_path "$(resolve_symlinks "$1")"
+}
+
+resolve_symlinks() {
+    local dir_context path
+    path=$(readlink -- "$1")
+    if [ $? -eq 0 ]; then
+        dir_context=$(dirname -- "$1")
+        resolve_symlinks "$(_prepend_path_if_relative "$dir_context" "$path")"
+    else
+        printf '%s\n' "$1"
+    fi
+}
+
+_prepend_path_if_relative() {
+    case "$2" in
+        /* ) printf '%s\n' "$2" ;;
+         * ) printf '%s\n' "$1/$2" ;;
+    esac
+}
+
+canonicalize_path() {
+    if [ -d "$1" ]; then
+        _canonicalize_dir_path "$1"
+    else
+        _canonicalize_file_path "$1"
+    fi
+}
+
+_canonicalize_dir_path() {
+    (cd "$1" 2>/dev/null && pwd -P)
+}
+
+_canonicalize_file_path() {
+    local dir file
+    dir=$(dirname -- "$1")
+    file=$(basename -- "$1")
+    (cd "$dir" 2>/dev/null && printf '%s/%s\n' "$(pwd -P)" "$file")
+}
+########################## end of realpath ####################################
+
 # Attempt to set APP_HOME
 # Resolve links: $0 may be a link
 PRG="$0"
@@ -28,7 +93,7 @@ APP_NAME="sirius"
 APP_BASE_NAME=`basename "$0"`
 
 # Assumes that the lib dir is in the same directory as this script
-LIB_DIR="$(dirname $(realpath -P $0))/lib"
+LIB_DIR="$(dirname $(realpath $0))/lib"
 
 export LD_LIBRARY_PATH="$GUROBI_HOME/lib:$APP_HOME/lib:$LD_LIBRARY_PATH"
 export DYLD_LIBRARY_PATH="$LD_LIBRARY_PATH"
