@@ -134,7 +134,7 @@ case "`uname`" in
     ;;
 esac
 
-CLASSPATH="${LIB_DIR}/*:${GUROBI_HOME}/lib/gurobi.jar"
+CLASSPATH="${LIB_DIR}/*:$APP_HOME/../../../All/Sirius/lib/*:${GUROBI_HOME}/lib/gurobi.jar"
 
 # Determine the Java command to use to start the JVM.
 if [ -n "$JAVA_HOME" ] ; then
