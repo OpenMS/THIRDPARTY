@@ -69,31 +69,16 @@ _canonicalize_file_path() {
     file=$(basename -- "$1")
     (cd "$dir" 2>/dev/null && printf '%s/%s\n' "$(pwd -P)" "$file")
 }
-########################## end of realpath ####################################
 
-# Attempt to set APP_HOME
-# Resolve links: $0 may be a link
-PRG="$0"
-# Need this for relative symlinks.
-while [ -h "$PRG" ] ; do
-    ls=`ls -ld "$PRG"`
-    link=`expr "$ls" : '.*-> \(.*\)$'`
-    if expr "$link" : '/.*' > /dev/null; then
-        PRG="$link"
-    else
-        PRG=`dirname "$PRG"`"/$link"
-    fi
-done
-SAVED="`pwd`"
-cd "`dirname \"$PRG\"`/.." >/dev/null
-APP_HOME=$SAVED
-cd "$SAVED" >/dev/null
+########################## end of realpath ####################################
 
 APP_NAME="sirius"
 APP_BASE_NAME=`basename "$0"`
 
 # Assumes that the lib dir is in the same directory as this script
 LIB_DIR="$(dirname $(realpath $0))/lib"
+# Set APP_HOME based on path to sirius (realpath)
+APP_HOME="$(dirname $(realpath $0))"
 
 export LD_LIBRARY_PATH="$GUROBI_HOME/lib:$APP_HOME/lib:$LD_LIBRARY_PATH"
 export DYLD_LIBRARY_PATH="$LD_LIBRARY_PATH"
@@ -134,6 +119,7 @@ case "`uname`" in
     ;;
 esac
 
+# LIB_DIR for flat folder structure; APP_HOME with relative path for THIRDPARTY folder structure
 CLASSPATH="${LIB_DIR}/*:$APP_HOME/../../../All/Sirius/lib/*:${GUROBI_HOME}/lib/gurobi.jar"
 
 # Determine the Java command to use to start the JVM.
