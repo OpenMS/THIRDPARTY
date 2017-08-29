@@ -222,7 +222,3 @@ if [ "$(uname)" = "Darwin" ] && [ "$HOME" = "$PWD" ]; then
 fi
 
 exec "$JAVACMD" "$@"
-<<<<<<< HEAD
-=======
-
->>>>>>> bcd34ec2cfcc7e6a818a084000fb8c67f3c0c789
