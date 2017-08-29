@@ -80,9 +80,6 @@ LIB_DIR="$(dirname $(realpath $0))/lib"
 # Set APP_HOME based on path to sirius (realpath)
 APP_HOME="$(dirname $(realpath $0))"
 
-echo "lib_dir" $LIB_DIR
-echo "APP_HOME" $APP_HOME
-
 export LD_LIBRARY_PATH="$GUROBI_HOME/lib:$APP_HOME/lib:$LD_LIBRARY_PATH"
 export DYLD_LIBRARY_PATH="$LD_LIBRARY_PATH"
 # Add default JVM options here. You can also use JAVA_OPTS and SIRIUS_OPTS to pass JVM options to this script.
