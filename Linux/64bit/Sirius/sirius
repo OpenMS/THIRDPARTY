@@ -6,6 +6,8 @@
 ##
 ##############################################################################
 
+trap 'kill $(jobs -p)' SIGINT SIGTERM EXIT
+
 ############ realpath from https://github.com/mkropat/sh-realpath ############
 ## The MIT License (MIT)
 
@@ -72,9 +74,11 @@ _canonicalize_file_path() {
 ########################## end of realpath ####################################
 
 # Assumes that the lib dir is in the same directory as this script
-LIB_DIR="$(dirname $(realpath $0))/lib"
 # Set APP_HOME based on path to sirius (realpath)
-APP_HOME="$(dirname $(realpath $0))"
+APP_HOME="$(realpath ${0%/*})"
+LIB_DIR="${APP_HOME}/lib"
+
+cd "${APP_HOME}"
 
 export LD_LIBRARY_PATH="$GUROBI_HOME/lib:$APP_HOME/lib:$LD_LIBRARY_PATH"
 export DYLD_LIBRARY_PATH="$LD_LIBRARY_PATH"
@@ -201,11 +205,12 @@ if $cygwin ; then
 fi
 
 # Escape application args
-save ( ) {
-    for i do printf %s\\n "$i" | sed "s/'/'\\\\''/g;1s/^/'/;\$s/\$/' \\\\/" ; done
-    echo " "
-}
-APP_ARGS=$(save "$@")
+# !!! Save does not work when invoked within KNIME
+#save ( ) {
+#    for i do printf %s\\n "$i" | sed "s/'/'\\\\''/g;1s/^/'/;\$s/\$/' \\\\/" ; done
+#    echo " "
+#}
+APP_ARGS="$@"
 
 # Collect all arguments for the java command, following the shell quoting and substitution rules
 eval set -- $DEFAULT_JVM_OPTS $JAVA_OPTS $SIRIUS_OPTS -classpath "\"$CLASSPATH\"" de.unijena.bioinf.sirius.cli.SiriusApplication "$APP_ARGS"
@@ -215,4 +220,7 @@ if [ "$(uname)" = "Darwin" ] && [ "$HOME" = "$PWD" ]; then
   cd "$(dirname "$0")"
 fi
 
-exec "$JAVACMD" "$@"
+"$JAVACMD" "$@" &
+wait
+
+
