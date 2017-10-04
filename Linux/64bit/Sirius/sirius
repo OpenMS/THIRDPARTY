@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/bash
 
 ##############################################################################
 ##
@@ -8,75 +8,9 @@
 
 trap 'kill $(jobs -p)' SIGINT SIGTERM EXIT
 
-############ realpath from https://github.com/mkropat/sh-realpath ############
-## The MIT License (MIT)
-
-## Copyright (c) 2014 Michael Kropat
-
-##Permission is hereby granted, free of charge, to any person obtaining a copy
-##of this software and associated documentation files (the "Software"), to deal
-##in the Software without restriction, including without limitation the rights
-##to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-##copies of the Software, and to permit persons to whom the Software is
-##furnished to do so, subject to the following conditions:
-
-##The above copyright notice and this permission notice shall be included in
-##all copies or substantial portions of the Software.
-
-##THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-##IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-##FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-##AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-##LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-##OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-##THE SOFTWARE.
-
-realpath() {
-    canonicalize_path "$(resolve_symlinks "$1")"
-}
-
-resolve_symlinks() {
-    local dir_context path
-    path=$(readlink -- "$1")
-    if [ $? -eq 0 ]; then
-        dir_context=$(dirname -- "$1")
-        resolve_symlinks "$(_prepend_path_if_relative "$dir_context" "$path")"
-    else
-        printf '%s\n' "$1"
-    fi
-}
-
-_prepend_path_if_relative() {
-    case "$2" in
-        /* ) printf '%s\n' "$2" ;;
-         * ) printf '%s\n' "$1/$2" ;;
-    esac
-}
-
-canonicalize_path() {
-    if [ -d "$1" ]; then
-        _canonicalize_dir_path "$1"
-    else
-        _canonicalize_file_path "$1"
-    fi
-}
-
-_canonicalize_dir_path() {
-    (cd "$1" 2>/dev/null && pwd -P)
-}
-
-_canonicalize_file_path() {
-    local dir file
-    dir=$(dirname -- "$1")
-    file=$(basename -- "$1")
-    (cd "$dir" 2>/dev/null && printf '%s/%s\n' "$(pwd -P)" "$file")
-}
-########################## end of realpath ####################################
-
-# Assumes that the lib dir is in the same directory as this script
-# Set APP_HOME based on path to sirius (realpath)
-APP_HOME="$(realpath ${0%/*})"
+APP_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LIB_DIR="${APP_HOME}/lib"
+
 
 cd "${APP_HOME}"
 
@@ -122,6 +56,7 @@ esac
 # LIB_DIR for flat folder structure; APP_HOME with relative path for THIRDPARTY folder structure
 CLASSPATH="${LIB_DIR}/*:$APP_HOME/../../../All/Sirius/lib/*:${GUROBI_HOME}/lib/gurobi.jar"
 
+
 # Determine the Java command to use to start the JVM.
 if [ -n "$JAVA_HOME" ] ; then
     if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
@@ -134,9 +69,10 @@ if [ -n "$JAVA_HOME" ] ; then
         die "ERROR: JAVA_HOME is set to an invalid directory: $JAVA_HOME Please set the JAVA_HOME variable in your environment to match the location of your Java installation."
     fi
 else
-    JAVACMD="java"
-    which java >/dev/null 2>&1 || die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH. Please set the JAVA_HOME variable in your environment to match the location of your Java installation."
+    JAVACMD="/usr/bin/java"
+    #which $JAVACMD >/dev/null 2>&1 || die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH. Please set the JAVA_HOME variable in your environment to match the location of your Java installation."
 fi
+
 
 # Increase the maximum file descriptors if we can.
 if [ "$cygwin" = "false" -a "$darwin" = "false" -a "$nonstop" = "false" ] ; then
@@ -206,7 +142,7 @@ fi
 
 # Escape application args
 # !!! Save does not work when invoked within KNIME
-#save ( ) {
+# save ( ) {
 #    for i do printf %s\\n "$i" | sed "s/'/'\\\\''/g;1s/^/'/;\$s/\$/' \\\\/" ; done
 #    echo " "
 #}
@@ -219,6 +155,7 @@ eval set -- $DEFAULT_JVM_OPTS $JAVA_OPTS $SIRIUS_OPTS -classpath "\"$CLASSPATH\"
 if [ "$(uname)" = "Darwin" ] && [ "$HOME" = "$PWD" ]; then
   cd "$(dirname "$0")"
 fi
+
 
 "$JAVACMD" "$@" &
 wait
