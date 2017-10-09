@@ -35,6 +35,7 @@ die ( ) {
 
 CLASSPATH="${LIB_DIR}/*:$APP_HOME/../../../All/Sirius/lib/*:${GUROBI_HOME}/lib/gurobi.jar"
 
+
 # Determine the Java command to use to start the JVM.
 if [ -n "$JAVA_HOME" ] ; then
     if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
@@ -49,6 +50,8 @@ if [ -n "$JAVA_HOME" ] ; then
 else
     JAVACMD="/usr/bin/java"
     #which $JAVACMD >/dev/null 2>&1 || die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH. Please set the JAVA_HOME variable in your environment to match the location of your Java installation."
+<<<<<<< HEAD
+>>>>>>> 0bc31899568525f9edfb6d749650488bb96f05a2
 fi
 
 # Escape application args
@@ -67,6 +70,8 @@ if [ "$(uname)" = "Darwin" ] && [ "$HOME" = "$PWD" ]; then
   cd "$(dirname "$0")"
 fi
 
+
 "$JAVACMD" "$@" &
 
 wait
+

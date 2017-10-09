@@ -1,9 +1,8 @@
 Compiled with the following specifications:
-    * gcc (Ubuntu 5.4.0-6ubuntu1~16.04.4) 5.4.0 20160609
-    * Ubuntu 16.04.1 LTS
+    * g++ (GCC) 7.1.1 20170630
     * 64bit
-    * boost_1_56_0
     * expat-2.0.1
     * gsl-1.14
     * zlib-1.2.5
- 
+    * statically-linked  (g++ -static)
+
