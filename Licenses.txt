@@ -1,0 +1,69 @@
+---------------------   Search engines:  ------------------------
+ 
+OMSSA
+  - URL:
+  ftp://ftp.ncbi.nlm.nih.gov/pub/lewisg/omssa
+  - License:
+  Public Domain
+
+Percolator:
+  - URL:
+  http://percolator.ms/
+  - License:
+  http://www.apache.org/licenses/LICENSE-2.0
+
+X!Tandem:
+  - URL and source code:
+  http://www.thegpm.org/tandem/
+  - License:
+  http://www.perlfoundation.org/attachment/legal/artistic-2_0.txt
+
+MyriMatch:
+  - URL and source code:
+  https://www.ncbi.nlm.nih.gov/pubmed/17269722
+  - License:
+  http://www.apache.org/licenses/LICENSE-2.0
+
+MSGF+:
+  - URL and source code:
+  https://github.com/sangtaekim/msgfplus
+  - License:
+  https://github.com/sangtaekim/msgfplus/blob/master/LICENSE.txt
+
+Fido:
+  - URL and source code:
+  https://noble.gs.washington.edu/proj/fido/
+  - License:
+  https://gist.github.com/hendrikweisser/2d10eb8bf1e370e6dfbb
+
+LuciPhOr2:
+  - URL and source code:
+  http://luciphor2.sourceforge.net/
+  - License:
+  http://www.apache.org/licenses/LICENSE-2.0
+
+SpectraST:
+  - URL and source code:
+ https://sourceforge.net/p/sashimi/code/HEAD/tree/trunk/
+ trans_proteomic_pipeline/src/Search/SpectraST/ 
+  - License:
+  https://www.gnu.org/licenses/gpl.html
+  https://www.gnu.org/copyleft/lesser.html
+
+SIRIUS:
+  - URL:
+  https://bio.informatik.uni-jena.de/software/sirius/
+  - License:
+  https://www.gnu.org/licenses/gpl
+
+Comet:
+  - URL and source code:
+  https://sourceforge.net/projects/comet-ms/
+  - License:
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Crux:
+  - URL and source code:
+  http://crux.ms
+  - License:
+  http://www.apache.org/licenses/LICENSE-2.0
