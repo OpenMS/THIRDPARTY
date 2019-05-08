@@ -67,3 +67,9 @@ Crux:
   http://crux.ms
   - License:
   http://www.apache.org/licenses/LICENSE-2.0
+  
+RawFileReader (via ThermoRawFileParser)
+  - URL:
+  https://github.com/compomics/ThermoRawFileParse
+  - License:
+  https://github.com/compomics/ThermoRawFileParser/blob/master/LICENSE  
