@@ -35,6 +35,15 @@ for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
 
 set JAR_HOME=%APP_HOME%\..\..\..\All\Sirius\app
 
+if exist "%JAR_HOME%\" (
+  echo "DEFAULT THIRDPARTY configuration"
+) else (
+  echo "FLAT THIRDPARTY configuration"
+  set JAR_HOME=%APP_HOME%\app
+)
+
+echo %JAR_HOME%
+
 @rem Add default JVM options here. You can also use JAVA_OPTS and SIRIUS_OPTS to pass JVM options to this script.
 set DEFAULT_JVM_OPTS="-Xms1G" "-XX:MaxRAMPercentage=85" "--illegal-access=permit" "--add-opens=java.base/java.lang=ALL-UNNAMED" "--add-opens=java.base/java.net=ALL-UNNAMED" "-javaagent:%JAR_HOME%\agents-4.4.8.jar" "-Djava.library.path=%APP_HOME%"
 set JAVA_EXE=%APP_HOME%\runtime\bin\java.exe
@@ -52,9 +61,8 @@ goto fail
 
 set CLASSPATH="%JAR_HOME%\*"
 
-
 @rem Execute sirius
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %SIRIUS_OPTS%  -classpath "%CLASSPATH%" "%MAIN_CLASS%" %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %SIRIUS_OPTS% -classpath "%CLASSPATH%" "%MAIN_CLASS%" %*
 
 :end
 @rem End local scope for the variables with windows NT shell
