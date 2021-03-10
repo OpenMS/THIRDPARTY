@@ -33,19 +33,14 @@ set APP_HOME=%DIRNAME:~0,-1%
 @rem Resolve any "." and ".." in APP_HOME to make it shorter.
 for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
 
+@rem DEFAULT THIRDPARTY configuration
 set JAR_HOME=%APP_HOME%\..\..\..\All\Sirius\app
 
-if exist "%JAR_HOME%\" (
-  echo "DEFAULT THIRDPARTY configuration"
-) else (
-  echo "FLAT THIRDPARTY configuration"
-  set JAR_HOME=%APP_HOME%\app
-)
-
-echo %JAR_HOME%
+@rem if JAR_HOME not exists: Assume FLAT THIRDPARTY configuration
+if not exist "%JAR_HOME%" set JAR_HOME=%APP_HOME%\app
 
 @rem Add default JVM options here. You can also use JAVA_OPTS and SIRIUS_OPTS to pass JVM options to this script.
-set DEFAULT_JVM_OPTS="-Xms1G" "-XX:MaxRAMPercentage=85" "--illegal-access=permit" "--add-opens=java.base/java.lang=ALL-UNNAMED" "--add-opens=java.base/java.net=ALL-UNNAMED" "-javaagent:%JAR_HOME%\agents-4.4.8.jar" "-Djava.library.path=%APP_HOME%"
+set DEFAULT_JVM_OPTS="-Xms1G" "-XX:MaxRAMPercentage=85"
 set JAVA_EXE=%APP_HOME%\runtime\bin\java.exe
 set MAIN_CLASS="de.unijena.bioinf.ms.frontend.SiriusCLIApplication"
 
@@ -59,10 +54,17 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH="%JAR_HOME%\*"
+set CLASSPATH=%JAR_HOME%\*
+
+set GUROBI_JAR=%GUROBI_HOME%\lib\gurobi.jar
+if exist "%GUROBI_JAR%" set CLASSPATH=%CLASSPATH%;%GUROBI_JAR%
+
+set CPLEX_JAR=%CPLEX_HOME%\lib\cplex.jar
+if exist "%CPLEX_JAR%" set CLASSPATH=%CLASSPATH%;%CPLEX_JAR%
+
 
 @rem Execute sirius
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %SIRIUS_OPTS% -classpath "%CLASSPATH%" "%MAIN_CLASS%" %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %SIRIUS_OPTS%  -classpath "%CLASSPATH%" "%MAIN_CLASS%" %*
 
 :end
 @rem End local scope for the variables with windows NT shell
