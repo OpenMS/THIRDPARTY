@@ -40,12 +40,12 @@ while [ -h "$PRG" ] ; do
     fi
 done
 SAVED="`pwd`"
-cd "`dirname \"$PRG\"`" >/dev/null
+cd "`dirname \"$PRG\"`/" >/dev/null
 APP_HOME="`pwd -P`"
 cd "$SAVED" >/dev/null
 
 # Add default JVM options here. You can also use JAVA_OPTS and SIRIUS_OPTS to pass JVM options to this script.
-DEFAULT_JVM_OPTS="-Xms1G -XX:MaxRAMPercentage=85 -Djava.library.path=\"$GUROBI_HOME/lib\":\"$CPLEX_HOME/bin/x86-64_linux\":\"$APP_HOME/lib/native\":\"$APP_HOME/lib/runtime/lib\""
+DEFAULT_JVM_OPTS="-Xms1G -XX:MaxRAMPercentage=85 -XX:+UseG1GC -XX:+UseStringDeduplication -Djava.library.path=\"$GUROBI_HOME/lib\":\"$CPLEX_HOME/bin/x86-64_linux\":\"$APP_HOME/lib/native\":\"$APP_HOME/lib/runtime/lib\""
 
 # Native library path
 export LD_LIBRARY_PATH="$GUROBI_HOME/lib:$CPLEX_HOME/bin/x86-64_linux:$APP_HOME/lib/native:$APP_HOME/lib/runtime/lib:$LD_LIBRARY_PATH"
