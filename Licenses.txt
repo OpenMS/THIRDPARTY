@@ -1,10 +1,4 @@
 ---------------------   Search engines:  ------------------------
- 
-OMSSA
-  - URL:
-  ftp://ftp.ncbi.nlm.nih.gov/pub/lewisg/omssa
-  - License:
-  Public Domain
 
 Percolator:
   - URL:
