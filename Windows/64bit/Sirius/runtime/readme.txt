@@ -15,5 +15,4 @@ source distribution.
 
   Include this version code in your email:
   zsrc17.32.13-jdk17.0.2 bfa6b2cbcbf7dea970e630cdbf45dce53de497fe
-  OpenJFX 17  44bdf37bb58cc26489c142510952742fe1116030
 
