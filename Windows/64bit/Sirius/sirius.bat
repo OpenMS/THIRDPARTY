@@ -33,16 +33,12 @@ set APP_HOME=%DIRNAME:~0,-1%
 @rem Resolve any "." and ".." in APP_HOME to make it shorter.
 for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
 
-@rem DEFAULT THIRDPARTY configuration
-set JAR_HOME=%APP_HOME%\..\..\..\All\Sirius\app
-
-@rem if JAR_HOME not exists: Assume FLAT THIRDPARTY configuration
-if not exist "%JAR_HOME%" set JAR_HOME=%APP_HOME%\app
+set JAR_HOME=%APP_HOME%\app
 
 @rem Add default JVM options here. You can also use JAVA_OPTS and SIRIUS_OPTS to pass JVM options to this script.
 set DEFAULT_JVM_OPTS="-Xms1G" "-XX:MaxRAMPercentage=85" "-XX:+UseG1GC" "-XX:+UseStringDeduplication"
 set JAVA_EXE=%APP_HOME%\runtime\bin\java.exe
-set MAIN_CLASS="de.unijena.bioinf.ms.frontend.SiriusCLIApplication"
+set MAIN_CLASS="de.unijena.bioinf.ms.frontend.SiriusGUIApplication"
 
 if exist "%JAVA_EXE%" goto execute
 
@@ -52,8 +48,8 @@ echo ERROR: Inlcuded java.exe could not be found. Please report this bug!
 goto fail
 
 :execute
-@rem Setup the command line
-
+@rem Setup the command line and add APP_HOME to user Path
+set Path=%APP_HOME%;%Path%
 set CLASSPATH=%JAR_HOME%\*
 
 set GUROBI_JAR=%GUROBI_HOME%\lib\gurobi.jar
