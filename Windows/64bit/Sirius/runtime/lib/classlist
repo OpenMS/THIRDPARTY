@@ -210,8 +210,8 @@ jdk/internal/access/JavaLangAccess
 java/lang/System$2
 jdk/internal/util/SystemProps
 jdk/internal/util/SystemProps$Raw
-jdk/internal/misc/VM
 java/lang/StringConcatHelper
+jdk/internal/misc/VM
 java/lang/VersionProps
 java/util/Arrays
 java/lang/CharacterData

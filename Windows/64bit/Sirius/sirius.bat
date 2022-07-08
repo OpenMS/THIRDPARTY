@@ -38,7 +38,7 @@ set JAR_HOME=%APP_HOME%\app
 @rem Add default JVM options here. You can also use JAVA_OPTS and SIRIUS_OPTS to pass JVM options to this script.
 set DEFAULT_JVM_OPTS="-Xms1G" "-XX:MaxRAMPercentage=85" "-XX:+UseG1GC" "-XX:+UseStringDeduplication"
 set JAVA_EXE=%APP_HOME%\runtime\bin\java.exe
-set MAIN_CLASS="de.unijena.bioinf.ms.frontend.SiriusGUIApplication"
+set MAIN_CLASS="de.unijena.bioinf.ms.frontend.SiriusCLIApplication"
 
 if exist "%JAVA_EXE%" goto execute
 

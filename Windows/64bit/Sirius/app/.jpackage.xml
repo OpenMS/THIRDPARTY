@@ -1,5 +1,0 @@
-<?xml version="1.0" ?>
-<jpackage-state version="15.0.7" platform="windows">
-  <app-version>5.5.5</app-version>
-  <main-launcher>sirius</main-launcher>
-  <add-launcher>sirius-gui</add-launcher></jpackage-state>
