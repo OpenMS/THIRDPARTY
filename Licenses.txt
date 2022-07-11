@@ -12,12 +12,6 @@ X!Tandem:
   - License:
   http://www.perlfoundation.org/attachment/legal/artistic-2_0.txt
 
-MyriMatch:
-  - URL and source code:
-  https://www.ncbi.nlm.nih.gov/pubmed/17269722
-  - License:
-  http://www.apache.org/licenses/LICENSE-2.0
-
 MSGF+:
   - URL and source code:
   https://github.com/sangtaekim/msgfplus
@@ -53,12 +47,6 @@ SIRIUS:
 Comet:
   - URL and source code:
   https://sourceforge.net/projects/comet-ms/
-  - License:
-  http://www.apache.org/licenses/LICENSE-2.0
-
-Crux:
-  - URL and source code:
-  http://crux.ms
   - License:
   http://www.apache.org/licenses/LICENSE-2.0
   
