@@ -8,6 +8,9 @@
 
 4. Place the `sirius` start up script (from the `Linux/64bit/Sirius/bin` directory) in `Linux/64bit/Sirius`.
 
-5. Edit the `sirius` start up script line ```cd "`dirname \"$PRG\"`/.." >/dev/null``` to ```cd `dirname \"$PRG\"` >/dev/null```
+5. Edit the `sirius` start up script lines: 
+
+```cd "`dirname \"$PRG\"`/.." >/dev/null``` to ```cd "`dirname \"$PRG\"`" >/dev/null```
+```JAR_HOME="$APP_HOME/lib/app"``` to ```JAR_HOME="$APP_HOME/../../../All/Sirius/app"```
 
 6. Move the `.jar` files from `Linux/64bit/Sirius/lib/app` to `All/Sirius/app`.
