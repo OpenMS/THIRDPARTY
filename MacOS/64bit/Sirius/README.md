@@ -8,9 +8,6 @@
 
 4. Place the `sirius` start up script (from the `MacOS/64bit/Sirius/MacOS` directory) in `MacOS/64bit/Sirius`.
 
-5. Edit the `sirius` start up script lines: 
-
-```cd "`dirname \"$PRG\"`/.." >/dev/null``` to ```cd "`dirname \"$PRG\"`" >/dev/null```
-```JAR_HOME="$APP_HOME/app"``` to ```JAR_HOME="$APP_HOME/../../../All/Sirius/app"```
+5. Edit the `sirius` start up script line ```cd "`dirname \"$PRG\"`/.." >/dev/null``` to ```cd "`dirname \"$PRG\"`" >/dev/null```
 
 6. Move the `.jar` files from `MacOS/64bit/Sirius/app` to `All/Sirius/app`.
