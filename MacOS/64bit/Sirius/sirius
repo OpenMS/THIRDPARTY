@@ -40,7 +40,7 @@ while [ -h "$PRG" ] ; do
     fi
 done
 SAVED="`pwd`"
-cd `dirname \"$PRG\"` >/dev/null
+cd "`dirname \"$PRG\"`" >/dev/null
 APP_HOME="`pwd -P`"
 cd "$SAVED" >/dev/null
 
@@ -51,7 +51,7 @@ DEFAULT_JVM_OPTS="-Xms1G -XX:MaxRAMPercentage=85 -XX:+UseG1GC -XX:+UseStringDedu
 export DYLD_LIBRARY_PATH="$GUROBI_HOME/lib:$CPLEX_HOME/bin/x86-64_osx:$APP_HOME/native:$APP_HOME/runtime/Contents/Home/lib:$DYLD_LIBRARY_PATH"
 
 # Add location of jar files for Classpath
-JAR_HOME="$APP_HOME/app"
+JAR_HOME="$APP_HOME/../../../All/Sirius/app"
 
 # Add full lib dir to classpath
 CLASSPATH="\"$JAR_HOME/*\":\"$GUROBI_HOME/lib/gurobi.jar\":\"$CPLEX_HOME/lib/cplex.jar\""
