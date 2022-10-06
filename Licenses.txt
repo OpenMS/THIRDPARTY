@@ -1,4 +1,4 @@
----------------------   Search engines:  ------------------------
+---------------------   THIRDPARTY tools:  ------------------------
 
 Comet:
   - URL and source code:
@@ -61,10 +61,10 @@ PWiz(ProteoWizard):
   https://github.com/ProteoWizard/
   - License:
   http://www.apache.org/licenses/LICENSE-2.0
- 
-RawFileReader (via ThermoRawFileParser):
+  
+ThermoRawFileParser
   - URL:
-  https://github.com/compomics/ThermoRawFileParse
+  https://github.com/compomics/ThermoRawFileParser
   - License:
   https://github.com/compomics/ThermoRawFileParser/blob/master/LICENSE  
 
