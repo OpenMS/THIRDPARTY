@@ -1,4 +1,4 @@
----------------------   Search engines:  ------------------------
+---------------------   THIRDPARTY tools:  ------------------------
 
 Percolator:
   - URL:
@@ -11,12 +11,6 @@ X!Tandem:
   http://www.thegpm.org/tandem/
   - License:
   http://www.perlfoundation.org/attachment/legal/artistic-2_0.txt
-
-MyriMatch:
-  - URL and source code:
-  https://www.ncbi.nlm.nih.gov/pubmed/17269722
-  - License:
-  http://www.apache.org/licenses/LICENSE-2.0
 
 MSGF+:
   - URL and source code:
@@ -38,17 +32,15 @@ LuciPhOr2:
 
 SpectraST:
   - URL and source code:
- https://sourceforge.net/p/sashimi/code/HEAD/tree/trunk/
- trans_proteomic_pipeline/src/Search/SpectraST/ 
+  https://sourceforge.net/p/sashimi/code/HEAD/tree/trunk/trans_proteomic_pipeline/src/Search/SpectraST/ 
   - License:
-  https://www.gnu.org/licenses/gpl.html
-  https://www.gnu.org/copyleft/lesser.html
+  https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 
 SIRIUS:
   - URL:
   https://bio.informatik.uni-jena.de/software/sirius/
   - License:
-  https://www.gnu.org/licenses/gpl
+  https://www.gnu.org/licenses/agpl-3.0
 
 Comet:
   - URL and source code:
@@ -62,8 +54,8 @@ Crux:
   - License:
   http://www.apache.org/licenses/LICENSE-2.0
   
-RawFileReader (via ThermoRawFileParser)
+ThermoRawFileParser
   - URL:
-  https://github.com/compomics/ThermoRawFileParse
+  https://github.com/compomics/ThermoRawFileParser
   - License:
   https://github.com/compomics/ThermoRawFileParser/blob/master/LICENSE  
