@@ -1,10 +1,6 @@
 COMET 2016013:
 https://sourceforge.net/projects/comet-ms/
 
-Crux 3.1.8b78546
-http://crux.ms/download.html
-
-
 makeblastdb ncbi-blast-2.2.27+:
 ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/
 
@@ -14,9 +10,6 @@ ftp://ftp.thegpm.org/projects/tandem/binary/
     ftp://ftp.thegpm.org/projects/tandem/binary/linux/fedora_15_32bit_static_links/all_static_link/ 
   Linux 64bit:
     ftp://ftp.thegpm.org/projects/tandem/binary/linux/ubuntu_11_64bit_static_links/all_static_link/
-
-MyriMatch 2.1 (build 132 25 Sep. 2012):
-http://fenchurch.mc.vanderbilt.edu/software.php
 
 Percolator 3.04
 https://github.com/percolator/percolator/releases/tag/rel-3-04

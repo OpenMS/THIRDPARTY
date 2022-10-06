@@ -6,14 +6,6 @@ Comet:
   - License:
   http://www.apache.org/licenses/LICENSE-2.0
 
-Crux:
-  - URL and source code:
-  http://crux.ms
-  - License:
-  http://www.apache.org/licenses/LICENSE-2.0
-  see: https://crux.ms/download.html for additional licenses
-
-
 Fido:
   - URL and source code:
   https://noble.gs.washington.edu/proj/fido/
@@ -61,7 +53,7 @@ PWiz(ProteoWizard):
   https://github.com/ProteoWizard/
   - License:
   http://www.apache.org/licenses/LICENSE-2.0
-  
+
 ThermoRawFileParser
   - URL:
   https://github.com/compomics/ThermoRawFileParser
