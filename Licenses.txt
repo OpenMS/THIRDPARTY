@@ -1,22 +1,10 @@
----------------------   Search engines:  ------------------------
+---------------------   THIRDPARTY tools:  ------------------------
 
-Percolator:
-  - URL:
-  http://percolator.ms/
+Comet:
+  - URL and source code:
+  https://sourceforge.net/projects/comet-ms/
   - License:
   http://www.apache.org/licenses/LICENSE-2.0
-
-X!Tandem:
-  - URL and source code:
-  http://www.thegpm.org/tandem/
-  - License:
-  http://www.perlfoundation.org/attachment/legal/artistic-2_0.txt
-
-MSGF+:
-  - URL and source code:
-  https://github.com/sangtaekim/msgfplus
-  - License:
-  https://github.com/sangtaekim/msgfplus/blob/master/LICENSE.txt
 
 Fido:
   - URL and source code:
@@ -30,28 +18,64 @@ LuciPhOr2:
   - License:
   http://www.apache.org/licenses/LICENSE-2.0
 
+Percolator:
+  - URL:
+  http://percolator.ms/
+  - License:
+  http://www.apache.org/licenses/LICENSE-2.0
+
+MaRaCluster:
+  - URL and source code:
+  https://github.com/statisticalbiotechnology/maracluster
+  - License:
+  http://www.apache.org/licenses/LICENSE-2.0
+
+MSFragger:
+  - URL:
+  https://github.com/Nesvilab/MSFragger
+  - License:
+  https://msfragger.arsci.com/upgrader/MSFragger-LICENSE.pdf
+
+MyriMatch:
+  - URL and source code:
+  https://www.ncbi.nlm.nih.gov/pubmed/17269722
+  - License:
+  http://www.apache.org/licenses/LICENSE-2.0
+
+MSGF+:
+  - URL and source code:
+  https://github.com/sangtaekim/msgfplus
+  - License:
+  https://github.com/sangtaekim/msgfplus/blob/master/LICENSE.txt
+
+PWiz(ProteoWizard):
+  - URL and source code:
+  https://github.com/ProteoWizard/
+  - License:
+  http://www.apache.org/licenses/LICENSE-2.0
+
+ThermoRawFileParser
+  - URL:
+  https://github.com/compomics/ThermoRawFileParser
+  - License:
+  https://github.com/compomics/ThermoRawFileParser/blob/master/LICENSE  
+
 SpectraST:
   - URL and source code:
  https://sourceforge.net/p/sashimi/code/HEAD/tree/trunk/
  trans_proteomic_pipeline/src/Search/SpectraST/ 
   - License:
-  https://www.gnu.org/licenses/gpl.html
-  https://www.gnu.org/copyleft/lesser.html
+  https://www.gnu.org/licenses/old-licenses/gpl-2.0
+  https://www.gnu.org/licenses/lgpl-3.0
 
 SIRIUS:
   - URL:
   https://bio.informatik.uni-jena.de/software/sirius/
   - License:
-  https://www.gnu.org/licenses/gpl
-
-Comet:
-  - URL and source code:
-  https://sourceforge.net/projects/comet-ms/
-  - License:
-  http://www.apache.org/licenses/LICENSE-2.0
+  https://www.gnu.org/licenses/agpl-3.0
   
-RawFileReader (via ThermoRawFileParser)
-  - URL:
-  https://github.com/compomics/ThermoRawFileParse
+X!Tandem:
+  - URL and source code:
+  http://www.thegpm.org/tandem/
   - License:
-  https://github.com/compomics/ThermoRawFileParser/blob/master/LICENSE  
+  https://opensource.org/licenses/artistic-license-2.0
