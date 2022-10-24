@@ -48,7 +48,7 @@ cd "$SAVED" >/dev/null
 DEFAULT_JVM_OPTS="-Xms1G -XX:MaxRAMPercentage=85 -XX:+UseG1GC -XX:+UseStringDeduplication -Djava.library.path=\"$GUROBI_HOME/lib\":\"$CPLEX_HOME/bin/x86-64_linux\":\"$APP_HOME/lib/native\":\"$APP_HOME/lib/runtime/lib\""
 
 # Native library path
-export LD_LIBRARY_PATH="$GUROBI_HOME/lib:$CPLEX_HOME/bin/x86-64_linux:$APP_HOME/lib/native:$APP_HOME/lib/runtime/lib:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="$GUROBI_HOME/lib:$CPLEX_HOME/bin/x86-64_linux:$APP_HOME/lib/native:$APP_HOME/lib/runtime/lib:$APP_HOME/lib/runtime/lib/server:$LD_LIBRARY_PATH"
 
 # Add location of jar files for Classpath
 JAR_HOME="$APP_HOME/app"

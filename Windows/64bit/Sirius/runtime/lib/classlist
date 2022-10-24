@@ -210,8 +210,8 @@ jdk/internal/access/JavaLangAccess
 java/lang/System$2
 jdk/internal/util/SystemProps
 jdk/internal/util/SystemProps$Raw
-java/lang/StringConcatHelper
 jdk/internal/misc/VM
+java/lang/StringConcatHelper
 java/lang/VersionProps
 java/util/Arrays
 java/lang/CharacterData
@@ -840,6 +840,13 @@ jdk/internal/loader/FileURLMapper
 java/nio/file/FileSystems$DefaultFileSystemHolder
 java/nio/file/FileSystems$DefaultFileSystemHolder$1
 jdk/internal/util/jar/JarIndex
+com/azul/tooling/in/Tooling$ToolingEvent
+com/azul/tooling/in/JarLoadEvent
+com/azul/tooling/in/Tooling
+com/azul/tooling/in/Tooling$1
+java/lang/IllegalAccessException
+java/lang/InstantiationException
+java/lang/reflect/InvocationTargetException
 jdk/internal/loader/Resource
 jdk/internal/loader/URLClassPath$JarLoader$2
 java/lang/NamedPackage

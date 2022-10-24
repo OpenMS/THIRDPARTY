@@ -169,6 +169,7 @@ java/lang/module/ModuleDescriptor
 java/lang/module/ModuleDescriptor$Version
 java/util/ImmutableCollections$SetN
 java/lang/module/ModuleDescriptor$Exports
+java/lang/module/ModuleDescriptor$Opens
 java/lang/module/ModuleDescriptor$Provides
 java/util/ImmutableCollections$AbstractImmutableList
 java/util/ImmutableCollections$List12
@@ -412,7 +413,6 @@ jdk/internal/module/SystemModulesMap
 jdk/internal/module/SystemModules
 jdk/internal/module/SystemModules$all
 jdk/internal/module/Builder
-java/lang/module/ModuleDescriptor$Opens
 java/lang/module/ModuleDescriptor$Modifier
 jdk/internal/module/ModuleHashes
 jdk/internal/module/ModuleResolution
@@ -825,6 +825,13 @@ jdk/internal/loader/FileURLMapper
 java/nio/file/FileSystems$DefaultFileSystemHolder
 java/nio/file/FileSystems$DefaultFileSystemHolder$1
 jdk/internal/util/jar/JarIndex
+com/azul/tooling/in/Tooling$ToolingEvent
+com/azul/tooling/in/JarLoadEvent
+com/azul/tooling/in/Tooling
+com/azul/tooling/in/Tooling$1
+java/lang/IllegalAccessException
+java/lang/InstantiationException
+java/lang/reflect/InvocationTargetException
 jdk/internal/loader/Resource
 jdk/internal/loader/URLClassPath$JarLoader$2
 java/lang/NamedPackage

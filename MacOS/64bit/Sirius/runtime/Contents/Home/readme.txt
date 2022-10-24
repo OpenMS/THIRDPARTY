@@ -14,5 +14,6 @@ source distribution.
   Please email azul_openjdk@azul.com for further information.
 
   Include this version code in your email:
-  zsrc17.32.13-jdk17.0.2 bfa6b2cbcbf7dea970e630cdbf45dce53de497fe
+  zsrc17.36.17-jdk17.0.4.1 ec0e7e3d7a436aa096c8fef8ace96b52db2a3039
+  CRS 0.7.0-eada7e6-155
 
