@@ -16,14 +16,15 @@ and Concatenated DTA files (_dta.txt).
 Requirements
 ======
 
-Java Runtime v1.6 or higher (use 64-bit Java)\
+Java Runtime 8 or higher (use 64-bit Java)\
 At least 2GB of memory (recommended to use 4GB); larger FASTA files require more memory
+
+There are some issues running with newer version of Java (Java 11 and newer), due to the deprecation and removal of some libraries. 
 
 Downloads / Updates
 ======
 
 * https://github.com/MSGFPlus/msgfplus/releases
-* https://omics.pnl.gov/software/ms-gf
 
 *Version number notes*
 
@@ -63,13 +64,15 @@ Sangtae Kim [sangtae.kim (at) gmail.com]
 Publications
 ======
 
-MS-GF+ makes progress towards a universal database search tool for proteomics, Sangtae Kim and Pavel A. Pevzner,
-Nat Commun. 2014 Oct 31;5:5277. doi: 10.1038/ncomms6277.\
-https://www.ncbi.nlm.nih.gov/pubmed/25358478
+"MS-GF+ makes progress towards a universal database search tool for proteomics,"\
+Sangtae Kim and Pavel A Pevzner,
+Nat Commun. 2014 Oct 31; 5:5277. doi: 10.1038/ncomms6277.\
+https://pubmed.ncbi.nlm.nih.gov/25358478/
 
-Spectral Probabilities and Generating Functions of Tandem Mass Spectra: A Strike against Decoy Databases, Sangtae Kim, Nitin Gupta, and Pavel Pevzner,
-J Proteome Res. 2008 Aug;7(8):3354-63. doi: 10.1021/pr8001244.\
-https://www.ncbi.nlm.nih.gov/pubmed/18597511
+"Spectral Probabilities and Generating Functions of Tandem Mass Spectra: A Strike against Decoy Databases",\
+Sangtae Kim, Nitin Gupta, and Pavel A Pevzner,
+J Proteome Res. 2008 Aug; 7(8):3354-63. doi: 10.1021/pr8001244.\
+https://pubmed.ncbi.nlm.nih.gov/18597511/
 
 Source
 ======
