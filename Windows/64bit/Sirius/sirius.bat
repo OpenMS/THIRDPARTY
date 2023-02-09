@@ -24,6 +24,8 @@
 @rem Set local scope for the variables with windows NT shell
 if "%OS%"=="Windows_NT" setlocal
 
+setlocal enabledelayedexpansion
+
 set DIRNAME=%~dp0
 if "%DIRNAME%" == "" set DIRNAME=.
 set APP_BASE_NAME=%~n0
@@ -40,7 +42,19 @@ set DEFAULT_JVM_OPTS="-Xms1G" "-XX:MaxRAMPercentage=85" "-XX:+UseG1GC" "-XX:+Use
 set JAVA_EXE=%APP_HOME%\runtime\bin\java.exe
 set MAIN_CLASS="de.unijena.bioinf.ms.frontend.SiriusCLIApplication"
 
-if exist "%JAVA_EXE%" goto execute
+if not exist %JAVA_EXE% (
+    set JAVA_EXE=%JAVA_HOME%\bin\java.exe
+@rem    echo using JAVA_HOME java !JAVA_EXE!
+)
+
+if not exist %JAVA_EXE% (
+    set JAVA_EXE=java.exe
+@rem    echo using system java !JAVA_EXE!
+)
+
+%JAVA_EXE% -version >nul 2>&1 && (
+    goto execute
+)
 
 echo.
 echo ERROR: Inlcuded java.exe could not be found. Please report this bug!
