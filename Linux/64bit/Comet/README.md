@@ -1,6 +1,9 @@
-Recompiled from source on Linux 4.19.0-6-amd64 #1 SMP Debian 4.19.67-2 (2019-08-28) x86\_64 GNU/Linux with
-ldd (Debian GLIBC 2.28-10) 2.28
-g++ (Debian 8.3.0-6) 8.3.0
+Recompiled from source on Linux 5.4.0-65-x86_64 with:
+
+- ldd (Ubuntu GLIBC 2.31-0ubuntu9.7) 2.31
+
+- g++ (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0
 
 statically.
-Tested on Ubuntu 14.04 and Centos 6
+
+Tested on Ubuntu 20.04.2 LTS
