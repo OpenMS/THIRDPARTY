@@ -4,13 +4,6 @@ https://sourceforge.net/projects/comet-ms/
 makeblastdb ncbi-blast-2.2.27+:
 ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/
 
-X!Tandem CYCLONE: 
-ftp://ftp.thegpm.org/projects/tandem/binary/ 
- Linux 32bit:
-    ftp://ftp.thegpm.org/projects/tandem/binary/linux/fedora_15_32bit_static_links/all_static_link/ 
-  Linux 64bit:
-    ftp://ftp.thegpm.org/projects/tandem/binary/linux/ubuntu_11_64bit_static_links/all_static_link/
-
 Percolator 3.04
 https://github.com/percolator/percolator/releases/tag/rel-3-04
 
