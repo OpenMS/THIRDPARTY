@@ -79,3 +79,9 @@ X!Tandem:
   http://www.thegpm.org/tandem/
   - License:
   https://opensource.org/licenses/artistic-license-2.0
+
+**SAGE‑MS:**
+  - **URL and source code:**  
+    https://github.com/lazear/sage :contentReference[oaicite:0]{index=0}
+  - **License:**  
+    MIT License :contentReference[oaicite:1]{index=1}
