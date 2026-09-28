@@ -1,11 +1,26 @@
-COMET 2016013:
-https://sourceforge.net/projects/comet-ms/
+Comet 2025.01 rev. 1 (Linux x86_64 and aarch64, MacOS arm64 and x86_64, Windows x86_64)
+https://github.com/UWPR/Comet/releases/tag/v2025.01.1
 
-makeblastdb ncbi-blast-2.2.27+:
-ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/
-
-Percolator 3.04
-https://github.com/percolator/percolator/releases/tag/rel-3-04
+LuciPHOr2 2.1-SNAPSHOT (all platforms, Java)
+http://luciphor2.sourceforge.net/
 
 MaRaCluster 1.04.1 (Linux x86_64, MacOS arm64, Windows x86_64)
 https://github.com/statisticalbiotechnology/maracluster/releases/tag/rel-1-04-1
+
+MS-GF+ v2024.03.26 (all platforms, Java)
+https://github.com/MSGFPlus/msgfplus/releases/tag/v2024.03.26
+
+Percolator 3.07.0 (Linux x86_64 and aarch64, MacOS arm64 and x86_64, Windows x86_64; it reports itself as 3.06.0, which upstream fixed in 3.07.1)
+https://github.com/percolator/percolator/releases/tag/rel-3-07
+
+ProteoWizard 3.0.22187 (Windows x86_64, pwiz-bin)
+https://proteowizard.sourceforge.io/
+
+Sage 0.14.6 (Linux x86_64 and aarch64, MacOS arm64 and x86_64, Windows x86_64)
+https://github.com/lazear/sage/releases/tag/v0.14.6
+
+ThermoRawFileParser 1.4.4 (all platforms, .NET)
+https://github.com/compomics/ThermoRawFileParser/releases/tag/v1.4.4
+
+X! Tandem Vengeance 2015.12.15.2 (Linux x86_64, MacOS x86_64, Windows x86_64)
+http://www.thegpm.org/tandem/
