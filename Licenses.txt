@@ -60,14 +60,6 @@ ThermoRawFileParser
   - License:
   https://github.com/compomics/ThermoRawFileParser/blob/master/LICENSE  
 
-SpectraST:
-  - URL and source code:
- https://sourceforge.net/p/sashimi/code/HEAD/tree/trunk/
- trans_proteomic_pipeline/src/Search/SpectraST/ 
-  - License:
-  https://www.gnu.org/licenses/old-licenses/gpl-2.0
-  https://www.gnu.org/licenses/lgpl-3.0
-
 SIRIUS:
   - URL:
   https://bio.informatik.uni-jena.de/software/sirius/
@@ -78,10 +70,10 @@ X!Tandem:
   - URL and source code:
   http://www.thegpm.org/tandem/
   - License:
-  https://opensource.org/licenses/artistic-license-2.0
+  Artistic License (Perl), https://spdx.org/licenses/Artistic-1.0-Perl.html
 
-**SAGE‑MS:**
-  - **URL and source code:**  
-    https://github.com/lazear/sage :contentReference[oaicite:0]{index=0}
-  - **License:**  
-    MIT License :contentReference[oaicite:1]{index=1}
+Sage:
+  - URL and source code:
+  https://github.com/lazear/sage
+  - License:
+  MIT License, https://github.com/lazear/sage/blob/master/LICENSE
