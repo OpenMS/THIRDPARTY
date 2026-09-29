@@ -226,6 +226,13 @@ jobs:
           ECHO BINARY=%WORK%/build/maracluster/src/Release/maracluster.exe>> %GITHUB_ENV%
           ECHO LIBRARIES=%WORK%/build/tools/proteowizard/lib/zlib.lib>> %GITHUB_ENV%
 
+      - name: Show ProteoWizard's build log
+        if: failure()
+        run: |
+          for log in "$WORK"/build/tools/pwiz_installation.log "$WORK"/build/tools/proteowizard/pwiz_installation.log; do
+            if [ -f "$log" ]; then echo "== $log"; tail -n 200 "$log"; fi
+          done
+
       - name: Check the zlib and expat versions
         run: |
           # shellcheck disable=SC2086 # LIBRARIES lists several files

@@ -62,9 +62,9 @@ checkout() { # <dir> <commit> [<tag>]
   echo "$1: $2${3:+ ($3)}"
 }
 
-# ProteoWizard's source tarballs leave out the documentation, the example data,
-# the .NET applications and the tests (Jamroot.jam: .pwiz-src-exclusions, .no-t);
-# pwiz-src-without-tv also the vendor APIs (.no-v). The tests have to go: those
+# ProteoWizard's source tarballs leave out the example data, some of the .NET
+# applications and libraries, the tests (Jamroot.jam: .pwiz-src-exclusions, .l,
+# .no-t), and pwiz-src-without-tv the vendor APIs (.no-v). The tests have to go: those
 # of the vendor readers cannot be built without the vendor APIs, and b2 then
 # skips everything that depends on them, among it the "libraries" target.
 pwiz() { # <with vendor APIs: yes|no>
@@ -72,14 +72,18 @@ pwiz() { # <with vendor APIs: yes|no>
   git -C pwiz sparse-checkout init --no-cone
   {
     echo '/*'
-    echo '!/doc/'
     echo '!/example_data/'
-    echo '!/libraries/arrow/'
-    echo '!/pwiz_tools/BiblioSpec/'
-    echo '!/pwiz_tools/Bumbershoot/'
-    echo '!/pwiz_tools/Shared/'
-    echo '!/pwiz_tools/Skyline/'
-    echo '!/pwiz_tools/Topograph/'
+    # of libraries/, the tarballs have only what the libraries build needs
+    for f in arrow/ 7zz readme.txt expat-*.tar.bz2 fftw-*.tar.bz2 msvc-2005-2008-runtime.tar.bz2; do
+      echo "!/libraries/$f"
+    done
+    for f in BiblioSpec Skyline Bumbershoot Shared/BiblioSpec Shared/Crawdad Shared/ProteomeDb \
+             Shared/Lib/Microsoft.Diagnostics.Runtime Shared/Lib/MSAmanda Shared/Lib/DotNetZip \
+             Shared/Lib/NHibernate Shared/Lib/npgsql Shared/Lib/x86 Shared/Lib/x64 'Shared/Lib/mysql.*' \
+             'Shared/Lib/zlib.*' 'Shared/Lib/*.pdb' 'Shared/Lib/grpc*' 'Shared/Lib/log4net*' \
+             'Shared/Lib/MathNet.Numerics*'; do
+      echo "!/pwiz_tools/$f"
+    done
     echo '!*Test*.data*'
     echo '!*Test.?pp'
     echo '!*TestData.?pp'
