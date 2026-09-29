@@ -57,6 +57,7 @@ for search in "${searches[@]}"; do
         || { echo "FAIL  $bin $name-$variant"; status=1; }
       # leave out what changes from run to run: dates, times, absolute paths
       for f in "$out"/r.*; do
+        [ -e "$f" ] || continue  # no output at all
         case $f in *.norm) continue ;; esac
         sed -E -e 's/[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9:.]+//g' -e 's/(date|creationDate)="[^"]*"//g' \
                -e 's#[0-9]{2}/[0-9]{2}/[0-9]{4}, [0-9]{2}:[0-9]{2}:[0-9]{2} [AP]M##g' \
@@ -65,6 +66,12 @@ for search in "${searches[@]}"; do
                "$f" > "$f.norm"
       done
     done
+    # the same output files from both, and the same content in each
+    if ! diff <(cd "out/old/$name-$variant" && ls r.*.norm 2> /dev/null) \
+              <(cd "out/new/$name-$variant" && ls r.*.norm 2> /dev/null) > /dev/null; then
+      echo "DIFF  $name-$variant output files"
+      status=1
+    fi
     for f in out/old/"$name-$variant"/r.*.norm; do
       g=out/new/$name-$variant/$(basename "$f")
       if cmp -s "$f" "$g"; then
