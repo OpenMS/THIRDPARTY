@@ -1,0 +1,303 @@
+name: Rebuild engines
+
+# Rebuilds the engines whose upstream binaries bundle an outdated zlib or expat
+# from the sources pinned in recipes/versions.env (see recipes/README.md), with
+# the build procedure of their upstream release builds, checks the zlib and expat
+# versions they carry, and compares their results with those of the binaries
+# they replace. The binaries are uploaded in this repository's folder layout.
+
+on:
+  push:
+    branches: [master]  # other branches build in their pull requests
+    paths:
+      - 'recipes/**'
+      - '.github/workflows/rebuild-engines.yml'
+  pull_request:
+    paths:
+      - 'recipes/**'
+      - '.github/workflows/rebuild-engines.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  comet:
+    name: Comet ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # the runners and compilers of Comet's own release builds
+          - platform: Linux/x86_64
+            runner: ubuntu-24.04
+            container: ubuntu:22.04
+          - platform: Linux/aarch64
+            runner: ubuntu-24.04-arm
+            container: ubuntu:22.04
+          - platform: MacOS/arm64
+            runner: macos-14
+            macos_min: '14.0'
+          - platform: MacOS/x86_64
+            runner: macos-15-intel
+            macos_min: '13.0'
+          - platform: Windows/x86_64
+            runner: windows-2022
+    runs-on: ${{ matrix.runner }}
+    container: ${{ matrix.container }}
+    timeout-minutes: 60
+    steps:
+      - name: Install the build tools
+        if: runner.os == 'Linux'
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends ca-certificates curl git g++ make xz-utils python3 binutils
+
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Set up the work folder
+        run: |
+          {
+            if [ "$RUNNER_OS" = Windows ]; then
+              echo "WORK=D:/w"
+              echo "PYTHON=python"
+            else
+              echo "WORK=$RUNNER_TEMP/w"
+            fi
+            grep -E '^[A-Z0-9_]+=' recipes/versions.env
+          } >> "$GITHUB_ENV"
+          # for the git commands of the later steps (in a container, the checkout has another owner)
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Fetch the sources
+        run: recipes/fetch-sources.sh "$WORK" zlib expat comet openms-testdata
+
+      - name: Swap MSToolkit's zlib and expat
+        run: recipes/comet/prepare.sh "$WORK/comet" "$WORK"
+
+      - name: Build (make)
+        if: runner.os != 'Windows'
+        working-directory: ${{ env.WORK }}/comet
+        env:
+          MACOSX_DEPLOYMENT_TARGET: ${{ matrix.macos_min }}
+        # GITHUB_SHA: Comet shows the first seven characters of the commit it was built from
+        run: |
+          make GITHUB_SHA="$COMET_COMMIT"
+          echo "BINARY=$PWD/comet.exe" >> "$GITHUB_ENV"
+          echo "LIBRARIES=$PWD/MSToolkit/libmstoolkitlite.a" >> "$GITHUB_ENV"
+
+      # MSToolkit's RAW reader #imports the type library of Thermo's MSFileReader,
+      # whose DLLs need the Visual C++ 2010 runtime: the windows-2019 image of
+      # Comet's release builds had it, windows-2022 has not.
+      - name: Install the Visual C++ 2010 runtime (Windows)
+        if: runner.os == 'Windows'
+        run: choco install vcredist2010 --no-progress -y
+
+      - name: Unpack Thermo's MSFileReader (Windows)
+        if: runner.os == 'Windows'
+        working-directory: ${{ env.WORK }}/comet
+        run: unzip -q -P iacceptthelicense extern/msfreader.zip -d dlls
+
+      - name: Register Thermo's MSFileReader (Windows)
+        if: runner.os == 'Windows'
+        working-directory: ${{ env.WORK }}/comet
+        shell: cmd
+        run: regsvr32 /S dlls\XRawfile2_x64.dll
+
+      - uses: microsoft/setup-msbuild@v2
+        if: runner.os == 'Windows'
+
+      - name: Build (MSBuild)
+        if: runner.os == 'Windows'
+        working-directory: ${{ env.WORK }}/comet
+        shell: cmd  # Git Bash does not find msbuild
+        run: msbuild Comet.sln -t:Comet -p:Configuration=Release -p:Platform=x64 -p:PlatformToolset=v142 -tv:Current
+
+      - name: Locate the binary (Windows)
+        if: runner.os == 'Windows'
+        working-directory: ${{ env.WORK }}/comet
+        run: |
+          echo "BINARY=$PWD/x64/Release/comet.exe" >> "$GITHUB_ENV"
+          echo "LIBRARIES=$(find "$PWD" -name MSToolkitLite.lib | tr '\n' ' ')" >> "$GITHUB_ENV"
+
+      - name: Check the zlib and expat versions
+        run: |
+          # shellcheck disable=SC2086 # LIBRARIES lists several files
+          recipes/check-bundled-libs.sh "$BINARY" $LIBRARIES
+
+      - name: Compare with the binary it replaces
+        run: |
+          "$BINARY" -p > /dev/null && rm comet.params.new
+          git fetch -q --depth 1 origin "$BASELINE_COMMIT"
+          mkdir -p "$WORK/baseline"
+          git cat-file blob "FETCH_HEAD:${{ matrix.platform }}/Comet/comet.exe" > "$WORK/baseline/comet.exe"
+          chmod +x "$WORK/baseline/comet.exe"
+          recipes/compare/comet.sh "$WORK/baseline/comet.exe" "$BINARY" "$WORK/compare" "$WORK/openms"
+
+      - name: Stage the binary
+        run: |
+          mkdir -p "$WORK/out/${{ matrix.platform }}/Comet"
+          cp "$BINARY" "$WORK/out/${{ matrix.platform }}/Comet/comet.exe"
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: comet-${{ runner.os }}-${{ runner.arch }}
+          path: ${{ env.WORK }}/out/
+          if-no-files-found: error
+
+  maracluster:
+    name: MaRaCluster ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # the runners of MaRaCluster's rel-1-04-1 release build
+          - platform: Linux/x86_64
+            runner: ubuntu-24.04
+            container: ubuntu:22.04
+          - platform: MacOS/arm64
+            runner: macos-14
+          - platform: Windows/x86_64
+            runner: windows-2022
+    runs-on: ${{ matrix.runner }}
+    container: ${{ matrix.container }}
+    timeout-minutes: 300
+    steps:
+      - name: Install the build tools
+        if: runner.os == 'Linux'
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends ca-certificates curl git python3 binutils sudo wget rsync g++ make cmake lbzip2
+
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Set up the work folder
+        run: |
+          {
+            if [ "$RUNNER_OS" = Windows ]; then
+              echo "WORK=D:/w"  # short paths for ProteoWizard's build
+              echo 'WORK_WIN=D:\w'
+              echo "PYTHON=python"
+              echo "PWIZ_SOURCE=pwiz-with-vendor-apis"
+            else
+              echo "WORK=$RUNNER_TEMP/w"
+              echo "PWIZ_SOURCE=pwiz"
+            fi
+            grep -E '^[A-Z0-9_]+=' recipes/versions.env
+          } >> "$GITHUB_ENV"
+          # for the git commands of the later steps (in a container, the checkout has another owner)
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Fetch the sources
+        run: recipes/fetch-sources.sh "$WORK" zlib maracluster "$PWIZ_SOURCE" openms-testdata
+
+      - name: Put the pinned ProteoWizard and zlib in place
+        run: recipes/maracluster/prepare.sh "$WORK/maracluster" "$WORK/pwiz" "$WORK" "$WORK/build"
+
+      # MaRaCluster's own builders, as its release build ran them (without the GUI).
+      # JAVA_HOME has to be empty, or ProteoWizard adds its Java bindings, which
+      # break its "libraries" target (MaRaCluster's CI clears it on macOS too).
+      - name: Build (admin/builders/tarball64_build.sh)
+        if: runner.os == 'Linux'
+        env:
+          JAVA_HOME: ''
+        run: |
+          "$WORK/maracluster/admin/builders/tarball64_build.sh" -s "$WORK" -r "$WORK/release" -b "$WORK/build" -g
+          echo "BINARY=$WORK/build/maracluster/src/maracluster" >> "$GITHUB_ENV"
+          echo "LIBRARIES=$WORK/build/tools/lib/libzlib.a" >> "$GITHUB_ENV"
+
+      - name: Build (admin/builders/osx64_build.sh)
+        if: runner.os == 'macOS'
+        env:
+          JAVA_HOME: ''
+        run: |
+          "$WORK/maracluster/admin/builders/osx64_build.sh" -s "$WORK" -r "$WORK/release" -b "$WORK/build" -g
+          echo "BINARY=$WORK/build/maracluster/src/maracluster" >> "$GITHUB_ENV"
+          echo "LIBRARIES=$WORK/build/tools/lib/libzlib.a" >> "$GITHUB_ENV"
+
+      - name: Build (admin/builders/nativew64_build.bat)
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: |
+          CALL %WORK_WIN%\maracluster\admin\builders\nativew64_build.bat -s %WORK_WIN% -r %WORK_WIN%\release -b %WORK_WIN%\build -g
+          IF NOT EXIST %WORK_WIN%\build\maracluster\src\Release\maracluster.exe EXIT /B 1
+          ECHO BINARY=%WORK%/build/maracluster/src/Release/maracluster.exe>> %GITHUB_ENV%
+          ECHO LIBRARIES=%WORK%/build/tools/proteowizard/lib/zlib.lib>> %GITHUB_ENV%
+
+      - name: Show ProteoWizard's build log
+        if: failure()
+        run: |
+          for log in "$WORK"/build/tools/pwiz_installation.log "$WORK"/build/tools/proteowizard/pwiz_installation.log; do
+            if [ -f "$log" ]; then echo "== $log"; tail -n 200 "$log"; fi
+          done
+
+      - name: Check the zlib and expat versions
+        run: |
+          # shellcheck disable=SC2086 # LIBRARIES lists several files
+          recipes/check-bundled-libs.sh "$BINARY" $LIBRARIES
+
+      - name: Compare with the binary it replaces
+        env:
+          REPEAT: 25
+        run: |
+          name=maracluster
+          [ "$RUNNER_OS" = Windows ] && name=maracluster.exe
+          git fetch -q --depth 1 origin "$BASELINE_COMMIT"
+          mkdir -p "$WORK/baseline"
+          git cat-file blob "FETCH_HEAD:${{ matrix.platform }}/MaRaCluster/$name" > "$WORK/baseline/$name"
+          chmod +x "$WORK/baseline/$name"
+          recipes/compare/maracluster.sh "$WORK/baseline/$name" "$BINARY" "$WORK/compare" "$WORK/openms"
+
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: maracluster-diagnostics-${{ runner.os }}-${{ runner.arch }}
+          path: |
+            ${{ env.WORK }}/compare/out/**/*.log
+            ${{ env.BINARY }}
+          if-no-files-found: ignore
+
+      - name: Stage the binary
+        run: |
+          mkdir -p "$WORK/out/${{ matrix.platform }}/MaRaCluster"
+          cp "$BINARY" "$WORK/out/${{ matrix.platform }}/MaRaCluster/"
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: maracluster-${{ runner.os }}-${{ runner.arch }}
+          path: ${{ env.WORK }}/out/
+          if-no-files-found: error
+
+  engines:
+    name: All engines
+    needs: [comet, maracluster]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - uses: actions/download-artifact@v8
+        with:
+          path: engines
+          merge-multiple: true
+
+      - name: Check the zlib and expat versions
+        run: |
+          find engines -type f | sort
+          find engines -type f -print0 | sort -z | xargs -0 recipes/check-bundled-libs.sh
+          (cd engines && find . -type f -print0 | sort -z | xargs -0 sha256sum)
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: engines
+          path: engines/
+          if-no-files-found: error

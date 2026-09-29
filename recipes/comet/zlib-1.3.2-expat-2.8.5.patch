@@ -1,0 +1,716 @@
+diff --git a/Comet.vcxproj b/Comet.vcxproj
+index aba3de6..db1fc44 100644
+--- a/Comet.vcxproj
++++ b/Comet.vcxproj
+@@ -113,7 +113,7 @@
+     <ClCompile>
+       <WarningLevel>Level3</WarningLevel>
+       <Optimization>Disabled</Optimization>
+-      <AdditionalIncludeDirectories>MSToolkit\include;MSToolkit\src\expat-2.2.9\lib;MSToolkit\src\zlib-1.2.11;CometSearch;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <AdditionalIncludeDirectories>MSToolkit\include;MSToolkit\src\expat-2.8.5\lib;MSToolkit\src\zlib-1.3.2;CometSearch;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+       <IntrinsicFunctions>false</IntrinsicFunctions>
+       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+@@ -143,7 +143,7 @@
+       <Optimization>MaxSpeed</Optimization>
+       <FunctionLevelLinking>false</FunctionLevelLinking>
+       <IntrinsicFunctions>true</IntrinsicFunctions>
+-      <AdditionalIncludeDirectories>pthreads-w32\include;MSToolkit\include;MSToolkit\src\expat-2.2.9\lib;MSToolkit\src\zlib-1.2.11;CometSearch;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <AdditionalIncludeDirectories>pthreads-w32\include;MSToolkit\include;MSToolkit\src\expat-2.8.5\lib;MSToolkit\src\zlib-1.3.2;CometSearch;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+@@ -172,7 +172,7 @@
+       <Optimization>MaxSpeed</Optimization>
+       <FunctionLevelLinking>false</FunctionLevelLinking>
+       <IntrinsicFunctions>true</IntrinsicFunctions>
+-      <AdditionalIncludeDirectories>MSToolkit\include;MSToolkit\src\expat-2.2.9\lib;MSToolkit\src\zlib-1.2.11;CometSearch;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <AdditionalIncludeDirectories>MSToolkit\include;MSToolkit\src\expat-2.8.5\lib;MSToolkit\src\zlib-1.3.2;CometSearch;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+       <PreprocessorDefinitions>WIN32;WIN64;_WIN64;_CRT_SECURE_NO_DEPRECATE;_NOSQLITE</PreprocessorDefinitions>
+       <FloatingPointModel>Fast</FloatingPointModel>
+       <BufferSecurityCheck>false</BufferSecurityCheck>
+diff --git a/CometSearch/CometSearch.vcxproj b/CometSearch/CometSearch.vcxproj
+index e6c8c3f..c5c59fb 100644
+--- a/CometSearch/CometSearch.vcxproj
++++ b/CometSearch/CometSearch.vcxproj
+@@ -109,7 +109,7 @@
+     <ClCompile>
+       <WarningLevel>Level3</WarningLevel>
+       <Optimization>Disabled</Optimization>
+-      <AdditionalIncludeDirectories>..\MSToolkit\include;..\MSToolkit\src\expat-2.2.9\lib;..\MSToolkit\src\zlib-1.2.11</AdditionalIncludeDirectories>
++      <AdditionalIncludeDirectories>..\MSToolkit\include;..\MSToolkit\src\expat-2.8.5\lib;..\MSToolkit\src\zlib-1.3.2</AdditionalIncludeDirectories>
+       <FloatingPointModel>Fast</FloatingPointModel>
+       <PreprocessorDefinitions>WIN32;WIN64;_WIN64;_MBCS;_CRT_SECURE_NO_DEPRECATE;_NOSQLITE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+@@ -125,7 +125,7 @@
+       <Optimization>MaxSpeed</Optimization>
+       <FunctionLevelLinking>false</FunctionLevelLinking>
+       <IntrinsicFunctions>true</IntrinsicFunctions>
+-      <AdditionalIncludeDirectories>..\pthreads-w32\include;..\MSToolkit\include;..\MSToolkit\src\expat-2.2.9\lib;..\MSToolkit\src\zlib-1.2.11;..\MSToolkit\src\sqlite-3.32.1</AdditionalIncludeDirectories>
++      <AdditionalIncludeDirectories>..\pthreads-w32\include;..\MSToolkit\include;..\MSToolkit\src\expat-2.8.5\lib;..\MSToolkit\src\zlib-1.3.2;..\MSToolkit\src\sqlite-3.32.1</AdditionalIncludeDirectories>
+       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+       <OmitFramePointers>true</OmitFramePointers>
+@@ -148,7 +148,7 @@
+       <Optimization>MaxSpeed</Optimization>
+       <FunctionLevelLinking>false</FunctionLevelLinking>
+       <IntrinsicFunctions>true</IntrinsicFunctions>
+-      <AdditionalIncludeDirectories>..\MSToolkit\include;..\MSToolkit\src\expat-2.2.9\lib;..\MSToolkit\src\zlib-1.2.11;</AdditionalIncludeDirectories>
++      <AdditionalIncludeDirectories>..\MSToolkit\include;..\MSToolkit\src\expat-2.8.5\lib;..\MSToolkit\src\zlib-1.3.2;</AdditionalIncludeDirectories>
+       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+       <OmitFramePointers>true</OmitFramePointers>
+diff --git a/CometSearch/Makefile b/CometSearch/Makefile
+index 4af7032..537c71e 100644
+--- a/CometSearch/Makefile
++++ b/CometSearch/Makefile
+@@ -14,9 +14,9 @@ endif
+ 
+ UNAME_S := $(shell uname -s)
+ ifeq ($(UNAME_S),Darwin)
+-   override CXXFLAGS += -O3 -static -std=c++14 -fpermissive -Wall -Wextra -Wno-write-strings -DGITHUBSHA='"$(GITHUB_SHA)"' -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DGCC -D_NOSQLITE -D__int64=off64_t -I. -I$(MSTPATH)/include -I$(MSTPATH)/src/expat-2.2.9/lib -I$(MSTPATH)/src/zlib-1.2.11
++   override CXXFLAGS += -O3 -static -std=c++14 -fpermissive -Wall -Wextra -Wno-write-strings -DGITHUBSHA='"$(GITHUB_SHA)"' -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DGCC -D_NOSQLITE -D__int64=off64_t -I. -I$(MSTPATH)/include -I$(MSTPATH)/src/expat-2.8.5/lib -I$(MSTPATH)/src/zlib-1.3.2
+ else
+-   override CXXFLAGS += -O3 -static -std=c++14 -fpermissive -Wall -Wextra -Wno-write-strings -DGITHUBSHA='"$(GITHUB_SHA)"' -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DGCC -D_NOSQLITE -D__int64=off64_t -I. -I$(MSTPATH)/include -I$(MSTPATH)/src/expat-2.2.9/lib -I$(MSTPATH)/src/zlib-1.2.11
++   override CXXFLAGS += -O3 -static -std=c++14 -fpermissive -Wall -Wextra -Wno-write-strings -DGITHUBSHA='"$(GITHUB_SHA)"' -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DGCC -D_NOSQLITE -D__int64=off64_t -I. -I$(MSTPATH)/include -I$(MSTPATH)/src/expat-2.8.5/lib -I$(MSTPATH)/src/zlib-1.3.2
+ 
+ endif
+ 
+diff --git a/CometWrapper/CometWrapper.vcxproj b/CometWrapper/CometWrapper.vcxproj
+index e080cd1..e528095 100644
+--- a/CometWrapper/CometWrapper.vcxproj
++++ b/CometWrapper/CometWrapper.vcxproj
+@@ -110,7 +110,7 @@
+       <Optimization>Disabled</Optimization>
+       <PreprocessorDefinitions>WIN32;WIN64;_WIN64;_DEBUG;_NOSQLITE;_CRT_SECURE_NO_WARNINGS%(PreprocessorDefinitions)</PreprocessorDefinitions>
+       <PrecompiledHeader>Use</PrecompiledHeader>
+-      <AdditionalIncludeDirectories>..\MSToolkit\include;..\MSToolkit\src\expat-2.2.9\lib;..\MSToolkit\src\zlib-1.2.11;..\CometSearch</AdditionalIncludeDirectories>
++      <AdditionalIncludeDirectories>..\MSToolkit\include;..\MSToolkit\src\expat-2.8.5\lib;..\MSToolkit\src\zlib-1.3.2;..\CometSearch</AdditionalIncludeDirectories>
+       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+     </ClCompile>
+     <Link>
+@@ -124,7 +124,7 @@
+       <WarningLevel>Level3</WarningLevel>
+       <PreprocessorDefinitions>WIN32;NDEBUG;_NOSQLITE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+       <PrecompiledHeader>Use</PrecompiledHeader>
+-      <AdditionalIncludeDirectories>..\MSToolkit\include;..\MSToolkit\src\expat-2.2.9\lib;..\MSToolkit\src\zlib-1.2.11;..\MSToolkit\src\sqlite-3.32.1;..\CometSearch</AdditionalIncludeDirectories>
++      <AdditionalIncludeDirectories>..\MSToolkit\include;..\MSToolkit\src\expat-2.8.5\lib;..\MSToolkit\src\zlib-1.3.2;..\MSToolkit\src\sqlite-3.32.1;..\CometSearch</AdditionalIncludeDirectories>
+     </ClCompile>
+     <Link>
+       <GenerateDebugInformation>true</GenerateDebugInformation>
+@@ -137,7 +137,7 @@
+       <WarningLevel>Level3</WarningLevel>
+       <PreprocessorDefinitions>WIN32;WIN64;_WIN64;NDEBUG;_NOSQLITE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+       <PrecompiledHeader>Use</PrecompiledHeader>
+-      <AdditionalIncludeDirectories>..\MSToolkit\include;..\MSToolkit\src\expat-2.2.9\lib;..\MSToolkit\src\zlib-1.2.11;..\CometSearch</AdditionalIncludeDirectories>
++      <AdditionalIncludeDirectories>..\MSToolkit\include;..\MSToolkit\src\expat-2.8.5\lib;..\MSToolkit\src\zlib-1.3.2;..\CometSearch</AdditionalIncludeDirectories>
+       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+       <IntrinsicFunctions>true</IntrinsicFunctions>
+       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+diff --git a/MSToolkit/MAKEFILE.nmake b/MSToolkit/MAKEFILE.nmake
+index 51fc79f..3e725ca 100644
+--- a/MSToolkit/MAKEFILE.nmake
++++ b/MSToolkit/MAKEFILE.nmake
+@@ -39,7 +39,7 @@ clean:
+ # -- Expat --------------------------------------------
+ # XML support
+ #------------------------------------------------------
+-EXPAT_SRCDIR=$(BUILD_SRC)\expat-2.2.9\lib
++EXPAT_SRCDIR=$(BUILD_SRC)\expat-2.8.5\lib
+ 
+ expat : $(EXPAT_SRCDIR)\\*.c
+ 	cl $(CFLAGS) $(CDEFS) /I"$(BUILD_INC)" /c /Fo$(BUILD_DIR)\ $?
+@@ -66,7 +66,7 @@ mzparser : $(MZP_SRCDIR)\\*.cpp
+ # -- zlib ---------------------------------------------
+ # zlib file compression
+ #------------------------------------------------------
+-ZLIB_SRCDIR=$(BUILD_SRC)\zlib-1.2.11
++ZLIB_SRCDIR=$(BUILD_SRC)\zlib-1.3.2
+ 
+ zlib : $(ZLIB_SRCDIR)\\*.c
+ 	cl $(CFLAGS) $(CDEFS) /I"$(BUILD_INC)" /c /Fo$(BUILD_DIR)\ $?
+diff --git a/MSToolkit/MSToolkitLite.vcxproj b/MSToolkit/MSToolkitLite.vcxproj
+index c8edd0c..d0fe4b4 100644
+--- a/MSToolkit/MSToolkitLite.vcxproj
++++ b/MSToolkit/MSToolkitLite.vcxproj
+@@ -103,7 +103,7 @@
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+     <ClCompile>
+       <Optimization>Full</Optimization>
+-      <AdditionalIncludeDirectories>./include;./src/expat-2.2.9/lib;./src/zlib-1.2.11;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <AdditionalIncludeDirectories>./include;./src/expat-2.8.5/lib;./src/zlib-1.3.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+       <PreprocessorDefinitions>WIN32;WIN64;_WIN64;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;COMPILED_FROM_DSP;_NOSQLITE;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+@@ -129,7 +129,7 @@
+     <ClCompile>
+       <Optimization>MaxSpeed</Optimization>
+       <IntrinsicFunctions>true</IntrinsicFunctions>
+-      <AdditionalIncludeDirectories>./include;./src/expat-2.2.9/lib;./src/zlib-1.2.11;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <AdditionalIncludeDirectories>./include;./src/expat-2.8.5/lib;./src/zlib-1.3.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;COMPILED_FROM_DSP;_NOSQLITE;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+       <FunctionLevelLinking>false</FunctionLevelLinking>
+@@ -155,7 +155,7 @@
+     <ClCompile>
+       <Optimization>MaxSpeed</Optimization>
+       <IntrinsicFunctions>true</IntrinsicFunctions>
+-      <AdditionalIncludeDirectories>./include;./src/expat-2.2.9/lib;./src/zlib-1.2.11;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <AdditionalIncludeDirectories>./include;./src/expat-2.8.5/lib;./src/zlib-1.3.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+       <PreprocessorDefinitions>WIN32;WIN64;_WIN64;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;COMPILED_FROM_DSP;_NOSQLITE;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+       <FunctionLevelLinking>false</FunctionLevelLinking>
+@@ -178,11 +178,12 @@
+     </ClCompile>
+   </ItemDefinitionGroup>
+   <ItemGroup>
+-    <ClCompile Include="src\expat-2.2.9\lib\xmlparse.c" />
+-    <ClCompile Include="src\expat-2.2.9\lib\xmlrole.c" />
+-    <ClCompile Include="src\expat-2.2.9\lib\xmltok.c" />
+-    <ClCompile Include="src\expat-2.2.9\lib\xmltok_impl.c" />
+-    <ClCompile Include="src\expat-2.2.9\lib\xmltok_ns.c" />
++    <ClCompile Include="src\expat-2.8.5\lib\xmlparse.c" />
++    <ClCompile Include="src\expat-2.8.5\lib\random_rand_s.c" />
++    <ClCompile Include="src\expat-2.8.5\lib\xmlrole.c" />
++    <ClCompile Include="src\expat-2.8.5\lib\xmltok.c" />
++    <ClCompile Include="src\expat-2.8.5\lib\xmltok_impl.c" />
++    <ClCompile Include="src\expat-2.8.5\lib\xmltok_ns.c" />
+     <ClCompile Include="src\MSToolkit\MSObject.cpp" />
+     <ClCompile Include="src\MSToolkit\MSReader.cpp" />
+     <ClCompile Include="src\MSToolkit\mzMLWriter.cpp" />
+@@ -204,25 +205,25 @@
+     <ClCompile Include="src\mzParser\saxhandler.cpp" />
+     <ClCompile Include="src\mzParser\saxmzmlhandler.cpp" />
+     <ClCompile Include="src\mzParser\saxmzxmlhandler.cpp" />
+-    <ClCompile Include="src\zlib-1.2.11\adler32.c" />
+-    <ClCompile Include="src\zlib-1.2.11\compress.c" />
+-    <ClCompile Include="src\zlib-1.2.11\crc32.c" />
+-    <ClCompile Include="src\zlib-1.2.11\deflate.c" />
+-    <ClCompile Include="src\zlib-1.2.11\gzclose.c" />
+-    <ClCompile Include="src\zlib-1.2.11\gzlib.c" />
+-    <ClCompile Include="src\zlib-1.2.11\gzread.c" />
+-    <ClCompile Include="src\zlib-1.2.11\gzwrite.c" />
+-    <ClCompile Include="src\zlib-1.2.11\infback.c" />
+-    <ClCompile Include="src\zlib-1.2.11\inffast.c" />
+-    <ClCompile Include="src\zlib-1.2.11\inflate.c" />
+-    <ClCompile Include="src\zlib-1.2.11\inftrees.c" />
+-    <ClCompile Include="src\zlib-1.2.11\trees.c" />
+-    <ClCompile Include="src\zlib-1.2.11\uncompr.c" />
+-    <ClCompile Include="src\zlib-1.2.11\zutil.c" />
++    <ClCompile Include="src\zlib-1.3.2\adler32.c" />
++    <ClCompile Include="src\zlib-1.3.2\compress.c" />
++    <ClCompile Include="src\zlib-1.3.2\crc32.c" />
++    <ClCompile Include="src\zlib-1.3.2\deflate.c" />
++    <ClCompile Include="src\zlib-1.3.2\gzclose.c" />
++    <ClCompile Include="src\zlib-1.3.2\gzlib.c" />
++    <ClCompile Include="src\zlib-1.3.2\gzread.c" />
++    <ClCompile Include="src\zlib-1.3.2\gzwrite.c" />
++    <ClCompile Include="src\zlib-1.3.2\infback.c" />
++    <ClCompile Include="src\zlib-1.3.2\inffast.c" />
++    <ClCompile Include="src\zlib-1.3.2\inflate.c" />
++    <ClCompile Include="src\zlib-1.3.2\inftrees.c" />
++    <ClCompile Include="src\zlib-1.3.2\trees.c" />
++    <ClCompile Include="src\zlib-1.3.2\uncompr.c" />
++    <ClCompile Include="src\zlib-1.3.2\zutil.c" />
+   </ItemGroup>
+   <ItemGroup>
+     <None Include="ReadMe.txt" />
+-    <None Include="src\expat-2.2.9\doc\reference.html" />
++    <None Include="src\expat-2.8.5\doc\reference.html" />
+   </ItemGroup>
+   <ItemGroup>
+     <ClInclude Include="include\amigaconfig.h" />
+@@ -310,57 +311,57 @@
+     <ClInclude Include="include\pepXMLWriter.h" />
+     <ClInclude Include="include\RAWReader.h" />
+     <ClInclude Include="include\Spectrum.h" />
+-    <ClInclude Include="src\expat-2.2.9\expat_config.h" />
+-    <ClInclude Include="src\expat-2.2.9\lib\ascii.h" />
+-    <ClInclude Include="src\expat-2.2.9\lib\asciitab.h" />
+-    <ClInclude Include="src\expat-2.2.9\lib\expat.h" />
+-    <ClInclude Include="src\expat-2.2.9\lib\expat_external.h" />
+-    <ClInclude Include="src\expat-2.2.9\lib\iasciitab.h" />
+-    <ClInclude Include="src\expat-2.2.9\lib\internal.h" />
+-    <ClInclude Include="src\expat-2.2.9\lib\latin1tab.h" />
+-    <ClInclude Include="src\expat-2.2.9\lib\nametab.h" />
+-    <ClInclude Include="src\expat-2.2.9\lib\siphash.h" />
+-    <ClInclude Include="src\expat-2.2.9\lib\utf8tab.h" />
+-    <ClInclude Include="src\expat-2.2.9\lib\winconfig.h" />
+-    <ClInclude Include="src\expat-2.2.9\lib\xmlrole.h" />
+-    <ClInclude Include="src\expat-2.2.9\lib\xmltok.h" />
+-    <ClInclude Include="src\expat-2.2.9\lib\xmltok_impl.h" />
+-    <ClInclude Include="src\expat-2.2.9\tests\chardata.h" />
+-    <ClInclude Include="src\expat-2.2.9\tests\memcheck.h" />
+-    <ClInclude Include="src\expat-2.2.9\tests\minicheck.h" />
+-    <ClInclude Include="src\expat-2.2.9\tests\structdata.h" />
+-    <ClInclude Include="src\expat-2.2.9\xmlwf\codepage.h" />
+-    <ClInclude Include="src\expat-2.2.9\xmlwf\filemap.h" />
+-    <ClInclude Include="src\expat-2.2.9\xmlwf\xmlfile.h" />
+-    <ClInclude Include="src\expat-2.2.9\xmlwf\xmlmime.h" />
+-    <ClInclude Include="src\expat-2.2.9\xmlwf\xmltchar.h" />
+-    <ClInclude Include="src\zlib-1.2.11\contrib\blast\blast.h" />
+-    <ClInclude Include="src\zlib-1.2.11\contrib\infback9\infback9.h" />
+-    <ClInclude Include="src\zlib-1.2.11\contrib\infback9\inffix9.h" />
+-    <ClInclude Include="src\zlib-1.2.11\contrib\infback9\inflate9.h" />
+-    <ClInclude Include="src\zlib-1.2.11\contrib\infback9\inftree9.h" />
+-    <ClInclude Include="src\zlib-1.2.11\contrib\iostream2\zstream.h" />
+-    <ClInclude Include="src\zlib-1.2.11\contrib\iostream3\zfstream.h" />
+-    <ClInclude Include="src\zlib-1.2.11\contrib\iostream\zfstream.h" />
+-    <ClInclude Include="src\zlib-1.2.11\contrib\minizip\crypt.h" />
+-    <ClInclude Include="src\zlib-1.2.11\contrib\minizip\ioapi.h" />
+-    <ClInclude Include="src\zlib-1.2.11\contrib\minizip\iowin32.h" />
+-    <ClInclude Include="src\zlib-1.2.11\contrib\minizip\mztools.h" />
+-    <ClInclude Include="src\zlib-1.2.11\contrib\minizip\unzip.h" />
+-    <ClInclude Include="src\zlib-1.2.11\contrib\minizip\zip.h" />
+-    <ClInclude Include="src\zlib-1.2.11\contrib\puff\puff.h" />
+-    <ClInclude Include="src\zlib-1.2.11\crc32.h" />
+-    <ClInclude Include="src\zlib-1.2.11\deflate.h" />
+-    <ClInclude Include="src\zlib-1.2.11\examples\gzlog.h" />
+-    <ClInclude Include="src\zlib-1.2.11\gzguts.h" />
+-    <ClInclude Include="src\zlib-1.2.11\inffast.h" />
+-    <ClInclude Include="src\zlib-1.2.11\inffixed.h" />
+-    <ClInclude Include="src\zlib-1.2.11\inflate.h" />
+-    <ClInclude Include="src\zlib-1.2.11\inftrees.h" />
+-    <ClInclude Include="src\zlib-1.2.11\trees.h" />
+-    <ClInclude Include="src\zlib-1.2.11\zconf.h" />
+-    <ClInclude Include="src\zlib-1.2.11\zlib.h" />
+-    <ClInclude Include="src\zlib-1.2.11\zutil.h" />
++    <ClInclude Include="src\expat-2.8.5\expat_config.h" />
++    <ClInclude Include="src\expat-2.8.5\lib\ascii.h" />
++    <ClInclude Include="src\expat-2.8.5\lib\asciitab.h" />
++    <ClInclude Include="src\expat-2.8.5\lib\expat.h" />
++    <ClInclude Include="src\expat-2.8.5\lib\expat_external.h" />
++    <ClInclude Include="src\expat-2.8.5\lib\iasciitab.h" />
++    <ClInclude Include="src\expat-2.8.5\lib\internal.h" />
++    <ClInclude Include="src\expat-2.8.5\lib\latin1tab.h" />
++    <ClInclude Include="src\expat-2.8.5\lib\nametab.h" />
++    <ClInclude Include="src\expat-2.8.5\lib\siphash.h" />
++    <ClInclude Include="src\expat-2.8.5\lib\utf8tab.h" />
++    <ClInclude Include="src\expat-2.8.5\lib\winconfig.h" />
++    <ClInclude Include="src\expat-2.8.5\lib\xmlrole.h" />
++    <ClInclude Include="src\expat-2.8.5\lib\xmltok.h" />
++    <ClInclude Include="src\expat-2.8.5\lib\xmltok_impl.h" />
++    <ClInclude Include="src\expat-2.8.5\tests\chardata.h" />
++    <ClInclude Include="src\expat-2.8.5\tests\memcheck.h" />
++    <ClInclude Include="src\expat-2.8.5\tests\minicheck.h" />
++    <ClInclude Include="src\expat-2.8.5\tests\structdata.h" />
++    <ClInclude Include="src\expat-2.8.5\xmlwf\codepage.h" />
++    <ClInclude Include="src\expat-2.8.5\xmlwf\filemap.h" />
++    <ClInclude Include="src\expat-2.8.5\xmlwf\xmlfile.h" />
++    <ClInclude Include="src\expat-2.8.5\xmlwf\xmlmime.h" />
++    <ClInclude Include="src\expat-2.8.5\xmlwf\xmltchar.h" />
++    <ClInclude Include="src\zlib-1.3.2\contrib\blast\blast.h" />
++    <ClInclude Include="src\zlib-1.3.2\contrib\infback9\infback9.h" />
++    <ClInclude Include="src\zlib-1.3.2\contrib\infback9\inffix9.h" />
++    <ClInclude Include="src\zlib-1.3.2\contrib\infback9\inflate9.h" />
++    <ClInclude Include="src\zlib-1.3.2\contrib\infback9\inftree9.h" />
++    <ClInclude Include="src\zlib-1.3.2\contrib\iostream2\zstream.h" />
++    <ClInclude Include="src\zlib-1.3.2\contrib\iostream3\zfstream.h" />
++    <ClInclude Include="src\zlib-1.3.2\contrib\iostream\zfstream.h" />
++    <ClInclude Include="src\zlib-1.3.2\contrib\minizip\crypt.h" />
++    <ClInclude Include="src\zlib-1.3.2\contrib\minizip\ioapi.h" />
++    <ClInclude Include="src\zlib-1.3.2\contrib\minizip\iowin32.h" />
++    <ClInclude Include="src\zlib-1.3.2\contrib\minizip\mztools.h" />
++    <ClInclude Include="src\zlib-1.3.2\contrib\minizip\unzip.h" />
++    <ClInclude Include="src\zlib-1.3.2\contrib\minizip\zip.h" />
++    <ClInclude Include="src\zlib-1.3.2\contrib\puff\puff.h" />
++    <ClInclude Include="src\zlib-1.3.2\crc32.h" />
++    <ClInclude Include="src\zlib-1.3.2\deflate.h" />
++    <ClInclude Include="src\zlib-1.3.2\examples\gzlog.h" />
++    <ClInclude Include="src\zlib-1.3.2\gzguts.h" />
++    <ClInclude Include="src\zlib-1.3.2\inffast.h" />
++    <ClInclude Include="src\zlib-1.3.2\inffixed.h" />
++    <ClInclude Include="src\zlib-1.3.2\inflate.h" />
++    <ClInclude Include="src\zlib-1.3.2\inftrees.h" />
++    <ClInclude Include="src\zlib-1.3.2\trees.h" />
++    <ClInclude Include="src\zlib-1.3.2\zconf.h" />
++    <ClInclude Include="src\zlib-1.3.2\zlib.h" />
++    <ClInclude Include="src\zlib-1.3.2\zutil.h" />
+   </ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+   <ImportGroup Label="ExtensionTargets">
+diff --git a/MSToolkit/MSToolkitLite.vcxproj.filters b/MSToolkit/MSToolkitLite.vcxproj.filters
+index 1f4d2c2..3a6dba2 100644
+--- a/MSToolkit/MSToolkitLite.vcxproj.filters
++++ b/MSToolkit/MSToolkitLite.vcxproj.filters
+@@ -27,19 +27,22 @@
+     </Filter>
+   </ItemGroup>
+   <ItemGroup>
+-    <ClCompile Include="src\expat-2.2.9\lib\xmltok.c">
++    <ClCompile Include="src\expat-2.8.5\lib\xmltok.c">
+       <Filter>Source Files\expat</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\expat-2.2.9\lib\xmltok_impl.c">
++    <ClCompile Include="src\expat-2.8.5\lib\xmltok_impl.c">
+       <Filter>Source Files\expat</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\expat-2.2.9\lib\xmltok_ns.c">
++    <ClCompile Include="src\expat-2.8.5\lib\xmltok_ns.c">
+       <Filter>Source Files\expat</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\expat-2.2.9\lib\xmlparse.c">
++    <ClCompile Include="src\expat-2.8.5\lib\xmlparse.c">
+       <Filter>Source Files\expat</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\expat-2.2.9\lib\xmlrole.c">
++    <ClCompile Include="src\expat-2.8.5\lib\random_rand_s.c">
++      <Filter>Source Files\expat</Filter>
++    </ClCompile>
++    <ClCompile Include="src\expat-2.8.5\lib\xmlrole.c">
+       <Filter>Source Files\expat</Filter>
+     </ClCompile>
+     <ClCompile Include="src\MSToolkit\pepXMLWriter.cpp">
+@@ -105,55 +108,55 @@
+     <ClCompile Include="src\mzParser\MSNumpress.cpp">
+       <Filter>Source Files\mzParser</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\zlib-1.2.11\deflate.c">
++    <ClCompile Include="src\zlib-1.3.2\deflate.c">
+       <Filter>Source Files\zLib</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\zlib-1.2.11\gzclose.c">
++    <ClCompile Include="src\zlib-1.3.2\gzclose.c">
+       <Filter>Source Files\zLib</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\zlib-1.2.11\gzlib.c">
++    <ClCompile Include="src\zlib-1.3.2\gzlib.c">
+       <Filter>Source Files\zLib</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\zlib-1.2.11\gzread.c">
++    <ClCompile Include="src\zlib-1.3.2\gzread.c">
+       <Filter>Source Files\zLib</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\zlib-1.2.11\gzwrite.c">
++    <ClCompile Include="src\zlib-1.3.2\gzwrite.c">
+       <Filter>Source Files\zLib</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\zlib-1.2.11\infback.c">
++    <ClCompile Include="src\zlib-1.3.2\infback.c">
+       <Filter>Source Files\zLib</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\zlib-1.2.11\inffast.c">
++    <ClCompile Include="src\zlib-1.3.2\inffast.c">
+       <Filter>Source Files\zLib</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\zlib-1.2.11\inflate.c">
++    <ClCompile Include="src\zlib-1.3.2\inflate.c">
+       <Filter>Source Files\zLib</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\zlib-1.2.11\inftrees.c">
++    <ClCompile Include="src\zlib-1.3.2\inftrees.c">
+       <Filter>Source Files\zLib</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\zlib-1.2.11\trees.c">
++    <ClCompile Include="src\zlib-1.3.2\trees.c">
+       <Filter>Source Files\zLib</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\zlib-1.2.11\uncompr.c">
++    <ClCompile Include="src\zlib-1.3.2\uncompr.c">
+       <Filter>Source Files\zLib</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\zlib-1.2.11\zutil.c">
++    <ClCompile Include="src\zlib-1.3.2\zutil.c">
+       <Filter>Source Files\zLib</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\zlib-1.2.11\adler32.c">
++    <ClCompile Include="src\zlib-1.3.2\adler32.c">
+       <Filter>Source Files\zLib</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\zlib-1.2.11\compress.c">
++    <ClCompile Include="src\zlib-1.3.2\compress.c">
+       <Filter>Source Files\zLib</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\zlib-1.2.11\crc32.c">
++    <ClCompile Include="src\zlib-1.3.2\crc32.c">
+       <Filter>Source Files\zLib</Filter>
+     </ClCompile>
+   </ItemGroup>
+   <ItemGroup>
+     <None Include="ReadMe.txt" />
+-    <None Include="src\expat-2.2.9\doc\reference.html">
++    <None Include="src\expat-2.8.5\doc\reference.html">
+       <Filter>Header Files</Filter>
+     </None>
+   </ItemGroup>
+@@ -209,157 +212,157 @@
+     <ClInclude Include="include\CCvList.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\zutil.h">
++    <ClInclude Include="src\zlib-1.3.2\zutil.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\zlib.h">
++    <ClInclude Include="src\zlib-1.3.2\zlib.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\zconf.h">
++    <ClInclude Include="src\zlib-1.3.2\zconf.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\trees.h">
++    <ClInclude Include="src\zlib-1.3.2\trees.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\inftrees.h">
++    <ClInclude Include="src\zlib-1.3.2\inftrees.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\inflate.h">
++    <ClInclude Include="src\zlib-1.3.2\inflate.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\inffast.h">
++    <ClInclude Include="src\zlib-1.3.2\inffast.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\inffixed.h">
++    <ClInclude Include="src\zlib-1.3.2\inffixed.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\gzguts.h">
++    <ClInclude Include="src\zlib-1.3.2\gzguts.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\examples\gzlog.h">
++    <ClInclude Include="src\zlib-1.3.2\examples\gzlog.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\deflate.h">
++    <ClInclude Include="src\zlib-1.3.2\deflate.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\crc32.h">
++    <ClInclude Include="src\zlib-1.3.2\crc32.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\contrib\puff\puff.h">
++    <ClInclude Include="src\zlib-1.3.2\contrib\puff\puff.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\contrib\minizip\zip.h">
++    <ClInclude Include="src\zlib-1.3.2\contrib\minizip\zip.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\contrib\minizip\unzip.h">
++    <ClInclude Include="src\zlib-1.3.2\contrib\minizip\unzip.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\contrib\minizip\mztools.h">
++    <ClInclude Include="src\zlib-1.3.2\contrib\minizip\mztools.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\contrib\minizip\iowin32.h">
++    <ClInclude Include="src\zlib-1.3.2\contrib\minizip\iowin32.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\contrib\minizip\ioapi.h">
++    <ClInclude Include="src\zlib-1.3.2\contrib\minizip\ioapi.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\contrib\minizip\crypt.h">
++    <ClInclude Include="src\zlib-1.3.2\contrib\minizip\crypt.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\contrib\iostream3\zfstream.h">
++    <ClInclude Include="src\zlib-1.3.2\contrib\iostream3\zfstream.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\contrib\iostream2\zstream.h">
++    <ClInclude Include="src\zlib-1.3.2\contrib\iostream2\zstream.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\contrib\iostream\zfstream.h">
++    <ClInclude Include="src\zlib-1.3.2\contrib\iostream\zfstream.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\contrib\infback9\inftree9.h">
++    <ClInclude Include="src\zlib-1.3.2\contrib\infback9\inftree9.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\contrib\infback9\inffix9.h">
++    <ClInclude Include="src\zlib-1.3.2\contrib\infback9\inffix9.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\contrib\infback9\inflate9.h">
++    <ClInclude Include="src\zlib-1.3.2\contrib\infback9\inflate9.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\contrib\infback9\infback9.h">
++    <ClInclude Include="src\zlib-1.3.2\contrib\infback9\infback9.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\zlib-1.2.11\contrib\blast\blast.h">
++    <ClInclude Include="src\zlib-1.3.2\contrib\blast\blast.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\xmlwf\xmlmime.h">
++    <ClInclude Include="src\expat-2.8.5\xmlwf\xmlmime.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\xmlwf\xmltchar.h">
++    <ClInclude Include="src\expat-2.8.5\xmlwf\xmltchar.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\xmlwf\xmlfile.h">
++    <ClInclude Include="src\expat-2.8.5\xmlwf\xmlfile.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\xmlwf\filemap.h">
++    <ClInclude Include="src\expat-2.8.5\xmlwf\filemap.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\xmlwf\codepage.h">
++    <ClInclude Include="src\expat-2.8.5\xmlwf\codepage.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\tests\structdata.h">
++    <ClInclude Include="src\expat-2.8.5\tests\structdata.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\tests\minicheck.h">
++    <ClInclude Include="src\expat-2.8.5\tests\minicheck.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\tests\memcheck.h">
++    <ClInclude Include="src\expat-2.8.5\tests\memcheck.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\tests\chardata.h">
++    <ClInclude Include="src\expat-2.8.5\tests\chardata.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\lib\xmltok_impl.h">
++    <ClInclude Include="src\expat-2.8.5\lib\xmltok_impl.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\lib\xmltok.h">
++    <ClInclude Include="src\expat-2.8.5\lib\xmltok.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\lib\xmlrole.h">
++    <ClInclude Include="src\expat-2.8.5\lib\xmlrole.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\lib\winconfig.h">
++    <ClInclude Include="src\expat-2.8.5\lib\winconfig.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\lib\utf8tab.h">
++    <ClInclude Include="src\expat-2.8.5\lib\utf8tab.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\lib\siphash.h">
++    <ClInclude Include="src\expat-2.8.5\lib\siphash.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\lib\nametab.h">
++    <ClInclude Include="src\expat-2.8.5\lib\nametab.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\lib\internal.h">
++    <ClInclude Include="src\expat-2.8.5\lib\internal.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\lib\latin1tab.h">
++    <ClInclude Include="src\expat-2.8.5\lib\latin1tab.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\lib\iasciitab.h">
++    <ClInclude Include="src\expat-2.8.5\lib\iasciitab.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\lib\expat.h">
++    <ClInclude Include="src\expat-2.8.5\lib\expat.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\lib\expat_external.h">
++    <ClInclude Include="src\expat-2.8.5\lib\expat_external.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\lib\asciitab.h">
++    <ClInclude Include="src\expat-2.8.5\lib\asciitab.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\lib\ascii.h">
++    <ClInclude Include="src\expat-2.8.5\lib\ascii.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+-    <ClInclude Include="src\expat-2.2.9\expat_config.h">
++    <ClInclude Include="src\expat-2.8.5\expat_config.h">
+       <Filter>Header Files</Filter>
+     </ClInclude>
+     <ClInclude Include="include\pepXMLWriter.h">
+diff --git a/MSToolkit/Makefile b/MSToolkit/Makefile
+index f199bb1..e6244e8 100644
+--- a/MSToolkit/Makefile
++++ b/MSToolkit/Makefile
+@@ -52,7 +52,7 @@ realclean : expat-realclean zlib-realclean mstoolkit-realclean mzparser-realclea
+ #
+ # http://expat.sourceforge.net/
+ #
+-EXPAT_VER := expat-2.2.9
++EXPAT_VER := expat-2.8.5
+ EXPAT_SRC := $(BUILD_SRC)/$(EXPAT_VER)
+ EXPAT_DST := include/expat_config.h $(BUILD_DIR)/libexpat.a
+ EXPAT_LIC := $(BUILD_LIC)/$(EXPAT_VER)/COPYING
+@@ -62,7 +62,7 @@ EXPAT_LIC := $(BUILD_LIC)/$(EXPAT_VER)/COPYING
+ expat : $(EXPAT_DST) $(EXPAT_LIC)
+ 
+ $(EXPAT_DST) : | $(BUILD_DIR)/ $(EXPAT_SRC)/
+-	cd $(BUILD_SRC); tar -xzf $(EXPAT_VER).tar.gz
++	cd $(BUILD_SRC); tar -xJf $(EXPAT_VER).tar.xz
+ 	cd $(EXPAT_SRC); ./configure --prefix=$(BUILD_DIR) \
+ 	   --enable-shared=yes --enable-static=yes \
+ 	   --without-xmlwf --without-examples --without-tests \
+@@ -92,7 +92,7 @@ expat-realclean : expat-clean
+ #
+ # http://zlib.net/
+ #
+-ZLIB_VER := zlib-1.2.11
++ZLIB_VER := zlib-1.3.2
+ ZLIB_SRC := $(BUILD_SRC)/$(ZLIB_VER)
+ ZLIB_SRCB := $(wildcard $(ZLIB_SRC)/*.c)
+ ZLIB_DST := $(BUILD_DIR)/libz.a
+@@ -103,7 +103,7 @@ ZLIB_LIC := $(BUILD_LIC)/$(ZLIB_VER)/README
+ zlib : $(ZLIB_DST) $(ZLIB_LIC)
+ 
+ $(ZLIB_DST) : | $(BUILD_DIR)/ $(ZLIB_SRC)/
+-	cd $(BUILD_SRC); unzip -o zlib1211.zip
++	cd $(BUILD_SRC); tar -xzf $(ZLIB_VER).tar.gz
+ 
+ ifeq ($(OS),Windows_NT)
+ 	cd $(ZLIB_SRC); make -f win32/Makefile.gcc; cp libz.a $(BUILD_DIR)
+@@ -215,7 +215,7 @@ lib : expat zlib mstoolkit mzparser mzimltools
+ ifneq ($(UNAME_S),Darwin)
+ 	ar -M <mstoolkitlite.mri
+ else
+-	ar -qc libmstoolkitlite.a obj/*.o src/expat-2.2.9/lib/*.o src/zlib-1.2.11/*.o
++	ar -qc libmstoolkitlite.a obj/*.o src/expat-2.8.5/lib/*.o src/zlib-1.3.2/*.o
+ endif
+ 
+ 
+diff --git a/Makefile b/Makefile
+index 912c914..b0e98a4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -4,9 +4,9 @@ COMETSEARCH =  CometSearch
+ 
+ UNAME_S := $(shell uname -s)
+ ifeq ($(UNAME_S),Darwin)
+-   override CXXFLAGS += -O3         -std=c++14 -fpermissive -Wall -Wextra -Wno-char-subscripts -DGITHUBSHA='"$(GITHUB_SHA)"' -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D__LINUX__ -D_NOSQLITE -I$(MSTOOLKIT)/include -I$(MSTOOLKIT)/src/expat-2.2.9/lib -I$(MSTOOLKIT)/src/zlib-1.2.11 -I$(COMETSEARCH)
++   override CXXFLAGS += -O3         -std=c++14 -fpermissive -Wall -Wextra -Wno-char-subscripts -DGITHUBSHA='"$(GITHUB_SHA)"' -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D__LINUX__ -D_NOSQLITE -I$(MSTOOLKIT)/include -I$(MSTOOLKIT)/src/expat-2.8.5/lib -I$(MSTOOLKIT)/src/zlib-1.3.2 -I$(COMETSEARCH)
+ else
+-   override CXXFLAGS += -O3 -static -std=c++14 -fpermissive -Wall -Wextra -Wno-char-subscripts -DGITHUBSHA='"$(GITHUB_SHA)"' -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D__LINUX__ -D_NOSQLITE -I$(MSTOOLKIT)/include -I$(MSTOOLKIT)/src/expat-2.2.9/lib -I$(MSTOOLKIT)/src/zlib-1.2.11 -I$(COMETSEARCH)
++   override CXXFLAGS += -O3 -static -std=c++14 -fpermissive -Wall -Wextra -Wno-char-subscripts -DGITHUBSHA='"$(GITHUB_SHA)"' -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D__LINUX__ -D_NOSQLITE -I$(MSTOOLKIT)/include -I$(MSTOOLKIT)/src/expat-2.8.5/lib -I$(MSTOOLKIT)/src/zlib-1.3.2 -I$(COMETSEARCH)
+ endif
+ 
+ EXECNAME = comet.exe
+@@ -51,5 +51,5 @@ cclean:
+ 	cd CometSearch ; make clean
+ 
+ mstclean:
+-	cd $(MSTOOLKIT)/src ; rm -rf expat-2.2.9 zlib-1.2.11/ ; tar xzf expat-2.2.9.tar.gz  ; unzip zlib1211.zip
++	cd $(MSTOOLKIT)/src ; rm -rf expat-2.8.5 zlib-1.3.2/ ; tar xJf expat-2.8.5.tar.xz ; tar xzf zlib-1.3.2.tar.gz
+ 	cd $(MSTOOLKIT)/include ; rm -f expat.h expat_external.h zconf.h zlib.h
