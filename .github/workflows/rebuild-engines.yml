@@ -71,6 +71,8 @@ jobs:
             fi
             grep -E '^[A-Z0-9_]+=' recipes/versions.env
           } >> "$GITHUB_ENV"
+          # for the git commands of the later steps (in a container, the checkout has another owner)
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
       - name: Fetch the sources
         run: recipes/fetch-sources.sh "$WORK" zlib expat comet openms-testdata
@@ -89,7 +91,13 @@ jobs:
           echo "BINARY=$PWD/comet.exe" >> "$GITHUB_ENV"
           echo "LIBRARIES=$PWD/MSToolkit/libmstoolkitlite.a" >> "$GITHUB_ENV"
 
-      # MSToolkit's RAW reader #imports the type library of Thermo's MSFileReader
+      # MSToolkit's RAW reader #imports the type library of Thermo's MSFileReader,
+      # whose DLLs need the Visual C++ 2010 runtime: the windows-2019 image of
+      # Comet's release builds had it, windows-2022 has not.
+      - name: Install the Visual C++ 2010 runtime (Windows)
+        if: runner.os == 'Windows'
+        run: choco install vcredist2010 --no-progress -y
+
       - name: Unpack Thermo's MSFileReader (Windows)
         if: runner.os == 'Windows'
         working-directory: ${{ env.WORK }}/comet
@@ -99,7 +107,7 @@ jobs:
         if: runner.os == 'Windows'
         working-directory: ${{ env.WORK }}/comet
         shell: cmd
-        run: FOR %%G IN (dlls\*.dll) DO regsvr32 /S %%G
+        run: regsvr32 /S dlls\XRawfile2_x64.dll
 
       - uses: microsoft/setup-msbuild@v2
         if: runner.os == 'Windows'
@@ -179,6 +187,8 @@ jobs:
             fi
             grep -E '^[A-Z0-9_]+=' recipes/versions.env
           } >> "$GITHUB_ENV"
+          # for the git commands of the later steps (in a container, the checkout has another owner)
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
       - name: Fetch the sources
         run: recipes/fetch-sources.sh "$WORK" zlib maracluster "$PWIZ_SOURCE" openms-testdata
