@@ -1,9 +1,11 @@
-Recompiled from source on Linux 5.4.0-65-x86_64 with:
+# Comet 2025.01 rev. 1
 
-- ldd (Ubuntu GLIBC 2.31-0ubuntu9.7) 2.31
+`comet.exe` is Comet 2025.01 rev. 1 (UWPR/Comet v2025.01.1, commit 4181df6),
+built by OpenMS from Comet's source with zlib 1.3.2 and expat 2.8.5 in place of
+the zlib 1.2.11 and expat 2.2.9 that Comet's MSToolkit bundles, which have known
+vulnerabilities. Otherwise it is built as Comet's own release binaries are; the
+recipe is in https://github.com/OpenMS/THIRDPARTY/tree/master/recipes.
 
-- g++ (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0
-
-statically.
-
-Tested on Ubuntu 20.04.2 LTS
+- Comet: https://github.com/UWPR/Comet, Apache License 2.0 (LICENSE)
+- expat: https://libexpat.github.io, MIT License (LICENSE-expat.txt)
+- zlib: https://zlib.net, zlib License

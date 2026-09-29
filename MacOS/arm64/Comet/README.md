@@ -1,23 +1,11 @@
-<img src="https://uwpr.github.io/Comet/images/cometlogo_1_small.png" align="right">
+# Comet 2025.01 rev. 1
 
-# Comet MS/MS
+`comet.exe` is Comet 2025.01 rev. 1 (UWPR/Comet v2025.01.1, commit 4181df6),
+built by OpenMS from Comet's source with zlib 1.3.2 and expat 2.8.5 in place of
+the zlib 1.2.11 and expat 2.2.9 that Comet's MSToolkit bundles, which have known
+vulnerabilities. Otherwise it is built as Comet's own release binaries are; the
+recipe is in https://github.com/OpenMS/THIRDPARTY/tree/master/recipes.
 
-Comet is an open source tandem mass spectrometry (MS/MS) sequence database search tool written primarily in C/C++. The original Comet repository lived on [SourceForge](https://sourceforge.net/projects/comet-ms/) since 2012. It was migrated to GitHub on September 2021.
-
-The project website [can be found here](https://uwpr.github.io/Comet/). This includes release notes and search parameters documentation.
-
-To compile on linux and macOS:
-
-- Type 'make'.  This will generate a binary "comet.exe".
-
-To compile with Microsoft Visual Studio:
-
-- Use build tools v142 with Microsoft Visual Studio 2019.
-
-- First install [MSFileReader from Thermo Fischer Scientific](https://uwpr.github.io/Comet/notes/20220228_rawfile.html).
-
-- Load "Comet.sln" in Visual Studio.
-
-- Set the build to "Release" and "x64".
-
-- Right-mouse-click on the "Comet" project and choose "Build". This should generate a binary "Comet.exe" in x64/Release.
+- Comet: https://github.com/UWPR/Comet, Apache License 2.0 (LICENSE)
+- expat: https://libexpat.github.io, MIT License (LICENSE-expat.txt)
+- zlib: https://zlib.net, zlib License
