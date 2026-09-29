@@ -1,0 +1,6 @@
+# The build recipes run in bash on Windows too, so they keep LF line ends there.
+# The patches go to git apply byte for byte: some of the files they change use CRLF.
+recipes/**/*.sh text eol=lf
+recipes/**/*.py text eol=lf
+recipes/versions.env text eol=lf
+recipes/**/*.patch -text
