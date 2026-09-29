@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
-# Runs two MaRaCluster binaries as OpenMS's MaRaClusterAdapter runs it (batch,
-# then consensus) on the adapter's test spectra and compares the clusters and the
-# consensus spectra. The spectra are given as they are (uncompressed), with
-# zlib-compressed binary arrays, and gzipped, so that the runs go through zlib.
+# Runs two MaRaCluster binaries as OpenMS's MaRaClusterAdapter runs it (index in
+# one thread, batch, consensus) on the adapter's test spectra and compares the
+# clusters and the consensus spectra. The spectra are given as they are
+# (uncompressed), with zlib-compressed binary arrays, and gzipped, so that the
+# runs go through zlib.
 #
-# With REPEAT=<n>, it then runs the batch step of both binaries n more times on
-# the uncompressed spectra, the new one also in one thread, and fails if one of
-# these runs fails: MaRaCluster reads its input files in parallel threads, and
-# one such run of a rebuilt binary crashed. The counts tell whether the old
-# binary does so as well, and whether the threads matter.
+# The batch step alone would convert the spectra in one OpenMP thread per file,
+# and opening several files at once crashes MaRaCluster's Windows build, the
+# release binary as the rebuilt one (see ../README.md); the index step converts
+# them in one thread, and batch reuses them. With REPEAT=<n>, the index and batch
+# steps of both binaries run n more times on the uncompressed spectra, and each
+# of these runs has to succeed as well.
 #
 # usage: [REPEAT=<n>] maracluster.sh <old maracluster> <new maracluster> <work dir> <OpenMS checkout>
 set -euo pipefail
@@ -16,6 +18,12 @@ here=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 abs() { echo "$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"; }
 native() { if command -v cygpath > /dev/null; then cygpath -m "$1"; else echo "$1"; fi; }
 python=${PYTHON:-python3}
+
+# the index and batch steps, with the parameters of MaRaClusterAdapter's test 1
+cluster() { # <maracluster>, in the folder with files.txt
+  OMP_NUM_THREADS=1 "$1" index -b files.txt -f res -p 20ppm > index.log 2>&1 &&
+    "$1" batch -b files.txt -f res -p 20ppm -t -10 -c -10 > batch.log 2>&1
+}
 
 old=$(abs "$1")
 new=$(abs "$2")
@@ -38,8 +46,7 @@ for variant in plain zlib gz; do
     out=out/$bin/$variant
     mkdir -p "$out"
     for f in in/"$variant"_1.mzML* in/"$variant"_2.mzML*; do native "$PWD/$f"; done > "$out/files.txt"
-    # the parameters of MaRaClusterAdapter's test 1
-    (cd "$out" && "$exe" batch -b files.txt -f res -p 20 -t -10 -c -10 > batch.log 2>&1 \
+    (cd "$out" && cluster "$exe" \
                && "$exe" consensus -l res/MaRaCluster.clusters_p10.tsv -f res -o consensus.mzML -M 1 > consensus.log 2>&1) \
       || { echo "FAIL  $bin $variant"; tail -n 5 "$out"/*.log; status=1; continue; }
     # leave out what changes from run to run: checksums, paths, the time, ProteoWizard's version
@@ -71,34 +78,25 @@ done
 
 repeat=${REPEAT:-0}
 if [ "$repeat" -gt 0 ]; then
-  # the old binary, the new binary, and the new binary in one thread (OpenMP)
-  failed_old=0 failed_new=0 failed_new1=0  # (macOS's bash 3.2 has no associative arrays)
+  failed_old=0 failed_new=0
   for ((i = 1; i <= repeat; i++)); do
-    for run in old new new1; do
-      case $run in
-        old) cmd=("$old"); files=out/old/plain/files.txt ;;
-        new) cmd=("$new"); files=out/new/plain/files.txt ;;
-        new1) cmd=(env OMP_NUM_THREADS=1 "$new"); files=out/new/plain/files.txt ;;
-      esac
-      out=out/repeat/$run-$i
+    for bin in old new; do
+      exe=$old
+      [ $bin = new ] && exe=$new
+      out=out/repeat/$bin-$i
       mkdir -p "$out"
-      cp "$files" "$out/"
-      if (cd "$out" && "${cmd[@]}" batch -b files.txt -f res -p 20 -t -10 -c -10 > batch.log 2>&1); then
+      cp "out/$bin/plain/files.txt" "$out/"
+      if (cd "$out" && cluster "$exe"); then
         rm -r "$out"
       else
-        echo "FAIL  $run repeat $i (exit status $?)"
-        tail -n 5 "$out/batch.log"
-        case $run in
-          old) failed_old=$((failed_old + 1)) ;;
-          new) failed_new=$((failed_new + 1)) ;;
-          new1) failed_new1=$((failed_new1 + 1)) ;;
-        esac
+        echo "FAIL  $bin repeat $i (exit status $?)"
+        tail -n 5 "$out"/*.log
+        if [ $bin = old ]; then failed_old=$((failed_old + 1)); else failed_new=$((failed_new + 1)); fi
       fi
     done
   done
   echo "old: $failed_old of $repeat repeated runs failed"
   echo "new: $failed_new of $repeat repeated runs failed"
-  echo "new in one thread: $failed_new1 of $repeat repeated runs failed"
-  [ $failed_old -eq 0 ] && [ $failed_new -eq 0 ] && [ $failed_new1 -eq 0 ] || status=1
+  [ $failed_old -eq 0 ] && [ $failed_new -eq 0 ] || status=1
 fi
 exit $status

@@ -39,8 +39,8 @@ in the patches here.
   content of ProteoWizard's source tarballs (`pwiz-src-without-tv`, and on
   Windows `pwiz-src-without-t`, which has the vendor APIs).
 
-`.github/workflows/rebuild-engines.yml` runs the builds on pushes and pull
-requests that change this folder, and by hand (workflow_dispatch).
+`.github/workflows/rebuild-engines.yml` runs the builds on pull requests and
+pushes to master that change this folder, and by hand (workflow_dispatch).
 
 ## How they are checked
 
@@ -55,6 +55,16 @@ requests that change this folder, and by hand (workflow_dispatch).
   spectra uncompressed, zlib-compressed and gzipped, and require the same
   results: Comet's txt, pepXML, mzIdentML, pin and SQT output, and MaRaCluster's
   clusters and consensus spectra (the latter name ProteoWizard's version).
+- They run the engines as OpenMS's adapters do. MaRaClusterAdapter runs
+  MaRaCluster's `index` step in one thread, then `batch` and `consensus`
+  (OpenMS/OpenMS#10259): `batch` alone converts the input files in one OpenMP
+  thread per file, and opening several files at once crashes MaRaCluster's Windows
+  build with an access violation. On a windows-2022 runner, `batch` alone on the
+  two test files crashed in 42 of 100 runs of the 1.04.1 release binary, in 35 of
+  100 runs of the rebuilt one, and in none of 100 runs of the rebuilt one in one
+  thread; on Linux, neither binary crashed in 500 runs. `compare/maracluster.sh`
+  runs `index` and `batch` of both binaries 25 more times (`REPEAT`), and each run
+  has to succeed.
 
 ## Updating the binaries
 

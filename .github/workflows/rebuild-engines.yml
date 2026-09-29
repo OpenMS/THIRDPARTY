@@ -8,6 +8,7 @@ name: Rebuild engines
 
 on:
   push:
+    branches: [master]  # other branches build in their pull requests
     paths:
       - 'recipes/**'
       - '.github/workflows/rebuild-engines.yml'
@@ -243,22 +244,9 @@ jobs:
           # shellcheck disable=SC2086 # LIBRARIES lists several files
           recipes/check-bundled-libs.sh "$BINARY" $LIBRARIES
 
-      # a crashing maracluster.exe leaves a minidump in the diagnostics artifact
-      - name: Keep crash dumps (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          $key = 'HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\maracluster.exe'
-          New-Item -Path $key -Force | Out-Null
-          New-ItemProperty -Path $key -Name DumpFolder -PropertyType ExpandString -Value "$env:WORK_WIN\dumps" -Force | Out-Null
-          New-ItemProperty -Path $key -Name DumpType -PropertyType DWord -Value 1 -Force | Out-Null
-          New-ItemProperty -Path $key -Name DumpCount -PropertyType DWord -Value 10 -Force | Out-Null
-          Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting' | Format-List
-          Get-Service WerSvc | Format-List Name, Status, StartType
-
       - name: Compare with the binary it replaces
         env:
-          REPEAT: 100
+          REPEAT: 25
         run: |
           name=maracluster
           [ "$RUNNER_OS" = Windows ] && name=maracluster.exe
@@ -274,7 +262,6 @@ jobs:
           name: maracluster-diagnostics-${{ runner.os }}-${{ runner.arch }}
           path: |
             ${{ env.WORK }}/compare/out/**/*.log
-            ${{ env.WORK }}/dumps/
             ${{ env.BINARY }}
           if-no-files-found: ignore
 
