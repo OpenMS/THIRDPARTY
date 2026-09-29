@@ -30,7 +30,10 @@ in the patches here.
   MaRaCluster have to use the same zlib. The patch makes MaRaCluster's builder
   scripts (`admin/builders`) build the ProteoWizard tree that `prepare.sh` puts
   in place, with ProteoWizard's `--zlib-src` option pointing to zlib 1.3.2;
-  `prepare.sh` removes ProteoWizard's zlib 1.2.3. MaRaCluster's release build
+  `prepare.sh` removes ProteoWizard's zlib 1.2.3, and on Linux and macOS runs
+  zlib's `configure`, which ProteoWizard's build of zlib does not (without it,
+  `zconf.h` leaves out `<unistd.h>`, which clang does not accept for zlib 1.3.2's
+  gz* functions). MaRaCluster's release build
   took the newest ProteoWizard at build time; `versions.env` pins the commit
   that was (26 June 2025). The ProteoWizard tree is a sparse checkout with the
   content of ProteoWizard's source tarballs (`pwiz-src-without-tv`, and on

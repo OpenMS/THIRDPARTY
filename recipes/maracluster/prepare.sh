@@ -31,6 +31,18 @@ rm "$libraries"/zlib-1.2.3.tar.bz2
 tar -xzf "$downloads/zlib-$ZLIB_VERSION.tar.gz" -C "$libraries"
 ls -d "$libraries"/zlib*
 
+# ProteoWizard compiles zlib's sources without zlib's configure, which leaves
+# zconf.h without <unistd.h>: gzlib.c, gzread.c and gzwrite.c then call lseek,
+# read, write and close undeclared, an error for clang and a warning for GCC.
+# Configure zlib as its own build does (Windows declares them in <io.h>).
+if [ "${OS:-}" != Windows_NT ]; then
+  (cd "$libraries/zlib-$ZLIB_VERSION" && ./configure > /dev/null)
+  if grep -n 'HAVE_UNISTD_H-0' "$libraries/zlib-$ZLIB_VERSION/zconf.h"; then
+    echo "zlib's configure did not find unistd.h" >&2
+    exit 1
+  fi
+fi
+
 # cmd.exe needs CRLF line ends to find the labels that the batch files call,
 # as a checkout on Windows would give them
 if [ "${OS:-}" = Windows_NT ]; then

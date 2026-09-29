@@ -243,7 +243,22 @@ jobs:
           # shellcheck disable=SC2086 # LIBRARIES lists several files
           recipes/check-bundled-libs.sh "$BINARY" $LIBRARIES
 
+      # a crashing maracluster.exe leaves a minidump in the diagnostics artifact
+      - name: Keep crash dumps (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $key = 'HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\maracluster.exe'
+          New-Item -Path $key -Force | Out-Null
+          New-ItemProperty -Path $key -Name DumpFolder -PropertyType ExpandString -Value "$env:WORK_WIN\dumps" -Force | Out-Null
+          New-ItemProperty -Path $key -Name DumpType -PropertyType DWord -Value 1 -Force | Out-Null
+          New-ItemProperty -Path $key -Name DumpCount -PropertyType DWord -Value 10 -Force | Out-Null
+          Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting' | Format-List
+          Get-Service WerSvc | Format-List Name, Status, StartType
+
       - name: Compare with the binary it replaces
+        env:
+          REPEAT: 100
         run: |
           name=maracluster
           [ "$RUNNER_OS" = Windows ] && name=maracluster.exe
@@ -252,6 +267,16 @@ jobs:
           git cat-file blob "FETCH_HEAD:${{ matrix.platform }}/MaRaCluster/$name" > "$WORK/baseline/$name"
           chmod +x "$WORK/baseline/$name"
           recipes/compare/maracluster.sh "$WORK/baseline/$name" "$BINARY" "$WORK/compare" "$WORK/openms"
+
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: maracluster-diagnostics-${{ runner.os }}-${{ runner.arch }}
+          path: |
+            ${{ env.WORK }}/compare/out/**/*.log
+            ${{ env.WORK }}/dumps/
+            ${{ env.BINARY }}
+          if-no-files-found: ignore
 
       - name: Stage the binary
         run: |
