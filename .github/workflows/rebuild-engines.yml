@@ -115,8 +115,13 @@ jobs:
       - name: Build (MSBuild)
         if: runner.os == 'Windows'
         working-directory: ${{ env.WORK }}/comet
+        shell: cmd  # Git Bash does not find msbuild
+        run: msbuild Comet.sln -t:Comet -p:Configuration=Release -p:Platform=x64 -p:PlatformToolset=v142 -tv:Current
+
+      - name: Locate the binary (Windows)
+        if: runner.os == 'Windows'
+        working-directory: ${{ env.WORK }}/comet
         run: |
-          msbuild Comet.sln -t:Comet -p:Configuration=Release -p:Platform=x64 -p:PlatformToolset=v142 -tv:Current
           echo "BINARY=$PWD/x64/Release/comet.exe" >> "$GITHUB_ENV"
           echo "LIBRARIES=$(find "$PWD" -name MSToolkitLite.lib | tr '\n' ' ')" >> "$GITHUB_ENV"
 
