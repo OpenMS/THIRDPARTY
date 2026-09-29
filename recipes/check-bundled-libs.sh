@@ -13,7 +13,8 @@ here=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 # shellcheck source-path=SCRIPTDIR source=versions.env
 . "$here/versions.env"
 
-printable() { # like "strings -a", which Git Bash on Windows does not have
+# printable <file>: its printable strings, like "strings -a", which Git Bash on Windows does not have
+printable() {
   if command -v strings > /dev/null; then
     strings -a "$1"
   else

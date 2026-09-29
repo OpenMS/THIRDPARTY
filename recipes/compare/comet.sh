@@ -7,6 +7,7 @@
 # usage: comet.sh <old comet> <new comet> <work dir> <OpenMS checkout>
 set -euo pipefail
 here=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+# the absolute path of a file
 abs() { echo "$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"; }
 # native paths for the params file (Git Bash on Windows)
 native() { if command -v cygpath > /dev/null; then cygpath -m "$1"; else echo "$1"; fi; }

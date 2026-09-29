@@ -15,6 +15,8 @@ data = open(src, "rb").read().decode("latin-1")
 
 
 def compress(match):
+    """Returns the binaryDataArray element of the match with its data zlib-compressed,
+    if it was uncompressed."""
     array = match.group(0)
     if 'accession="MS:1000576"' not in array:
         return array

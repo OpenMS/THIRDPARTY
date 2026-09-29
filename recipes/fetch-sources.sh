@@ -19,11 +19,13 @@ shift
 mkdir -p "$dest"
 cd "$dest"
 
+# sha256 <file>: prints its SHA-256 (macOS has shasum, not sha256sum)
 sha256() {
   if command -v sha256sum > /dev/null; then sha256sum "$1" | cut -d' ' -f1; else shasum -a 256 "$1" | cut -d' ' -f1; fi
 }
 
-download() { # <url> <sha256>
+# download <url> <sha256>: fetches the file into the current folder and checks its SHA-256
+download() {
   local file=${1##*/}
   curl -fsSL --retry 5 --retry-delay 10 --retry-all-errors -o "$file" "$1"
   local got
@@ -35,8 +37,9 @@ download() { # <url> <sha256>
   echo "$file: SHA-256 $got as expected"
 }
 
-# a shallow checkout of <commit>; with a tag, the tag must name that commit
-init_repo() { # <repo> <dir> [line ends: as-committed (default) | platform]
+# init_repo <repo> <dir> [as-committed (default) | platform]: an empty repository with
+# <repo> as origin; its checkouts keep the line ends as committed, or use the platform's
+init_repo() {
   git init -q "$2"
   if [ "${3:-as-committed}" = as-committed ]; then
     # also on Windows, so that the patches apply and indexed mzML files keep their offsets
@@ -44,7 +47,10 @@ init_repo() { # <repo> <dir> [line ends: as-committed (default) | platform]
   fi
   git -C "$2" remote add origin "$1"
 }
-checkout() { # <dir> <commit> [<tag>]
+
+# checkout <dir> <commit> [<tag> [<fetch options>...]]: a shallow checkout of <commit>;
+# with a tag, the tag must name that commit
+checkout() {
   if [ -n "${3:-}" ]; then
     local refs tagged
     refs=$(git -C "$1" ls-remote --tags origin "refs/tags/$3")

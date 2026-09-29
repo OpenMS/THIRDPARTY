@@ -15,12 +15,15 @@
 # usage: [REPEAT=<n>] maracluster.sh <old maracluster> <new maracluster> <work dir> <OpenMS checkout>
 set -euo pipefail
 here=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+# the absolute path of a file
 abs() { echo "$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"; }
+# native paths for the file lists (Git Bash on Windows)
 native() { if command -v cygpath > /dev/null; then cygpath -m "$1"; else echo "$1"; fi; }
 python=${PYTHON:-python3}
 
-# the index and batch steps, with the parameters of MaRaClusterAdapter's test 1
-cluster() { # <maracluster>, in the folder with files.txt
+# cluster <maracluster>: the index and batch steps, in the folder with files.txt,
+# with the parameters of MaRaClusterAdapter's test 1
+cluster() {
   OMP_NUM_THREADS=1 "$1" index -b files.txt -f res -p 20ppm > index.log 2>&1 &&
     "$1" batch -b files.txt -f res -p 20ppm -t -10 -c -10 > batch.log 2>&1
 }
