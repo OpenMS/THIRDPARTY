@@ -25,7 +25,7 @@ sha256() {
 
 download() { # <url> <sha256>
   local file=${1##*/}
-  curl -fsSL --retry 3 -o "$file" "$1"
+  curl -fsSL --retry 5 --retry-delay 10 --retry-all-errors -o "$file" "$1"
   local got
   got=$(sha256 "$file")
   if [ "$got" != "$2" ]; then

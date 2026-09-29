@@ -28,8 +28,9 @@ for file in "$@"; do
   echo "== $file"
   # zlib's ZLIB_VERSION is a bare "1.x.y" string, which other version numbers can
   # be as well; such a string fails the check only if it is the version of a zlib
-  # that the upstream binaries bundled
-  markers=$(printable "$file" | grep -oE '(de|in)flate [0-9][0-9.]* Copyright|expat_[0-9][0-9.]*|^1\.[0-9]\.[0-9]+(\.[0-9]+)?$' | sort | uniq -c || true)
+  # that the upstream binaries bundled. Only full versions count: the objects of
+  # MSVC's link-time code generation hold fragments such as "expat_2".
+  markers=$(printable "$file" | grep -oE '(de|in)flate [0-9]+(\.[0-9]+)+ Copyright|expat_[0-9]+\.[0-9]+\.[0-9]+|^1\.[0-9]\.[0-9]+(\.[0-9]+)?$' | sort | uniq -c || true)
   if [ -z "$markers" ]; then
     echo "   no zlib or expat version string"
     continue
